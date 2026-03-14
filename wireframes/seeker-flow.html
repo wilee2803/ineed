@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INEED — Seeker Flow Wireframes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #1a1a2e;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .subtitle {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 36px;
+  }
+
+  /* Flow navigation */
+  .flow-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+    max-width: 900px;
+  }
+
+  .flow-btn {
+    background: #2a2a3e;
+    border: 1px solid #3a3a5e;
+    color: #aaa;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .flow-btn:hover { background: #3a3a5e; color: #fff; }
+  .flow-btn.active { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+
+  /* Screens container */
+  .screens-wrapper {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1400px;
+  }
+
+  /* Phone frame */
+  .phone-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .screen-label {
+    color: #666;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .screen-number {
+    color: #4f46e5;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .phone {
+    width: 320px;
+    height: 640px;
+    background: #f5f5f0;
+    border-radius: 40px;
+    border: 8px solid #2a2a3e;
+    box-shadow: 0 0 0 2px #3a3a5e, 0 20px 60px rgba(0,0,0,0.5);
+    overflow: hidden;
+    position: relative;
+    display: none;
+  }
+
+  .phone.visible { display: block; }
+
+  /* Status bar */
+  .status-bar {
+    background: #fff;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #111;
+    flex-shrink: 0;
+  }
+
+  .status-icons { display: flex; gap: 4px; align-items: center; }
+
+  /* Screen base */
+  .screen {
+    width: 100%;
+    height: calc(100% - 28px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #f5f5f0;
+  }
+
+  /* ─── COMPONENTS ─── */
+
+  .nav-bar {
+    background: #fff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #eee;
+    flex-shrink: 0;
+  }
+
+  .nav-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    flex: 1;
+  }
+
+  .nav-back {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  /* Map */
+  .map-area {
+    background: #dde8d8;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+  }
+
+  .map-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .map-road-h {
+    position: absolute;
+    height: 8px;
+    background: #fff;
+    opacity: 0.7;
+    left: 0; right: 0;
+  }
+
+  .map-road-v {
+    position: absolute;
+    width: 8px;
+    background: #fff;
+    opacity: 0.7;
+    top: 0; bottom: 0;
+  }
+
+  .map-block {
+    position: absolute;
+    background: #c8d8c0;
+    border-radius: 3px;
+  }
+
+  .pin {
+    position: absolute;
+    transform: translate(-50%, -100%);
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .pin-bubble {
+    background: #4f46e5;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(79,70,229,0.4);
+  }
+
+  .pin-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #4f46e5;
+    border-bottom: 0;
+  }
+
+  .pin-bubble.sale { background: #059669; }
+  .pin-bubble.sale::after { border-top-color: #059669; }
+
+  .user-dot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #4f46e5;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 6px rgba(79,70,229,0.15);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Radius circle */
+  .radius-circle {
+    position: absolute;
+    border: 2px dashed rgba(79,70,229,0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(79,70,229,0.05);
+    pointer-events: none;
+  }
+
+  /* Map overlays */
+  .map-search-bar {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    z-index: 20;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  .search-text {
+    flex: 1;
+    font-size: 13px;
+    color: #888;
+  }
+
+  .radius-control {
+    position: absolute;
+    bottom: 100px;
+    left: 12px;
+    right: 12px;
+    z-index: 20;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+
+  .radius-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .radius-label span { font-size: 11px; color: #888; }
+  .radius-value { font-size: 13px; font-weight: 700; color: #4f46e5; }
+
+  .slider-track {
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .slider-fill {
+    height: 100%;
+    background: #4f46e5;
+    border-radius: 2px;
+    width: 35%;
+  }
+
+  .slider-thumb {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #4f46e5;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    top: -6px;
+    left: 33%;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .map-filters {
+    position: absolute;
+    top: 68px;
+    left: 12px;
+    right: 12px;
+    z-index: 20;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .filter-chip {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 11px;
+    white-space: nowrap;
+    color: #444;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+
+  .filter-chip.active-chip {
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: #fff;
+  }
+
+  /* Bottom sheet */
+  .bottom-sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 12px 16px 16px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+    z-index: 20;
+  }
+
+  .sheet-handle {
+    width: 36px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 2px;
+    margin: 0 auto 12px;
+  }
+
+  .sheet-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  /* Listing cards */
+  .listing-card-h {
+    display: flex;
+    gap: 10px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 8px;
+    border: 1px solid #eee;
+  }
+
+  .listing-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    background: #ddd;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    overflow: hidden;
+  }
+
+  .listing-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .listing-info { flex: 1; min-width: 0; }
+
+  .listing-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .listing-price span {
+    font-size: 11px;
+    font-weight: 400;
+    color: #888;
+  }
+
+  .listing-addr {
+    font-size: 11px;
+    color: #888;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .listing-tags {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    background: #f0f0f0;
+    color: #666;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .tag.rent { background: #ede9fe; color: #5b21b6; }
+  .tag.sale { background: #d1fae5; color: #065f46; }
+  .tag.lock { background: #fff7ed; color: #c2410c; }
+  .tag.cam { background: #eff6ff; color: #1d4ed8; }
+
+  .listing-dist {
+    font-size: 10px;
+    color: #4f46e5;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* Detail screen */
+  .detail-hero {
+    height: 200px;
+    background: #ccc;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #c8d5e8 0%, #a8b8d0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.5));
+  }
+
+  .hero-badges {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+  }
+
+  .badge-purple { background: #4f46e5; color: #fff; }
+  .badge-green { background: #059669; color: #fff; }
+  .badge-orange { background: #d97706; color: #fff; }
+
+  .hero-image-nav {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    display: flex;
+    gap: 4px;
+  }
+
+  .dot-nav {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+  }
+
+  .dot-nav.active { background: #fff; }
+
+  .detail-back {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 5;
+  }
+
+  .detail-fav {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 5;
+  }
+
+  .detail-body {
+    padding: 16px;
+    flex: 1;
+  }
+
+  .detail-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  .detail-price {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111;
+  }
+
+  .detail-price-sub { font-size: 12px; color: #888; font-weight: 400; }
+
+  .detail-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 4px;
+  }
+
+  .detail-address {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .stats-row {
+    display: flex;
+    background: #f7f7f7;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 14px;
+    gap: 4px;
+  }
+
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    border-right: 1px solid #eee;
+    padding-right: 4px;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .stat-lbl {
+    font-size: 10px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  .desc-text {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .tour-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .tour-btn {
+    flex: 1;
+    background: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+    font-size: 11px;
+    color: #444;
+    font-weight: 600;
+  }
+
+  .tour-btn .tour-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+  .tour-btn.active-tour { background: #ede9fe; color: #4f46e5; }
+
+  .availability-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  .slot-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .slot {
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    color: #444;
+    text-align: center;
+    background: #fff;
+  }
+
+  .slot.selected { border-color: #4f46e5; background: #ede9fe; color: #4f46e5; font-weight: 600; }
+  .slot.type-lock::after { content: ' 🔑'; }
+  .slot.type-cam::after { content: ' 📷'; }
+
+  .slot-time { font-weight: 600; font-size: 12px; }
+  .slot-type-label { font-size: 9px; color: #999; margin-top: 1px; }
+
+  /* Bottom CTA */
+  .bottom-cta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 16px;
+    background: #fff;
+    border-top: 1px solid #eee;
+  }
+
+  .btn-primary {
+    width: 100%;
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+  }
+
+  .btn-secondary {
+    width: 100%;
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin-top: 8px;
+  }
+
+  .btn-success {
+    background: #059669;
+  }
+
+  .btn-outline {
+    width: 100%;
+    background: transparent;
+    color: #4f46e5;
+    border: 2px solid #4f46e5;
+    border-radius: 14px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* KYC screen */
+  .kyc-hero {
+    background: linear-gradient(160deg, #4f46e5, #7c3aed);
+    padding: 30px 20px 24px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .kyc-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+  }
+
+  .kyc-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .kyc-sub {
+    font-size: 12px;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  .kyc-steps {
+    padding: 20px 16px;
+    flex: 1;
+  }
+
+  .kyc-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ede9fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+    border: 2px solid #4f46e5;
+  }
+
+  .step-circle.done { background: #4f46e5; color: #fff; }
+  .step-circle.active { background: #4f46e5; color: #fff; }
+
+  .step-content { flex: 1; }
+  .step-name { font-size: 13px; font-weight: 700; color: #222; }
+  .step-desc { font-size: 11px; color: #888; margin-top: 2px; }
+
+  /* Document scan */
+  .scan-frame {
+    margin: 16px;
+    border: 3px dashed #4f46e5;
+    border-radius: 16px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f5f3ff;
+    gap: 8px;
+  }
+
+  .scan-frame.done { border-color: #059669; background: #f0fdf4; border-style: solid; }
+
+  .scan-icon { font-size: 32px; }
+  .scan-label { font-size: 12px; color: #666; }
+  .scan-sublabel { font-size: 10px; color: #aaa; }
+
+  /* Credit Card */
+  .card-visual {
+    margin: 16px;
+    height: 120px;
+    background: linear-gradient(135deg, #1a1a2e, #4f46e5);
+    border-radius: 16px;
+    padding: 16px;
+    color: #fff;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(79,70,229,0.3);
+  }
+
+  .card-chip { font-size: 20px; margin-bottom: 12px; }
+
+  .card-number {
+    font-size: 14px;
+    letter-spacing: 3px;
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+
+  .card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .card-name { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .card-expiry { font-size: 10px; opacity: 0.7; }
+
+  .card-brand {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 22px;
+  }
+
+  .form-field {
+    margin: 0 16px 10px;
+  }
+
+  .field-label { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+
+  .field-input {
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #333;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .field-input.focused { border-color: #4f46e5; }
+
+  .field-row { display: flex; gap: 8px; margin: 0 16px 10px; }
+  .field-row .form-field { margin: 0; flex: 1; }
+
+  /* Pre-auth info */
+  .preauth-box {
+    margin: 12px 16px;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .preauth-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .preauth-text { font-size: 11px; color: #92400e; line-height: 1.5; }
+  .preauth-text strong { display: block; margin-bottom: 2px; }
+
+  /* Confirmation */
+  .confirm-hero {
+    background: linear-gradient(160deg, #059669, #047857);
+    padding: 30px 20px 24px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .confirm-icon { font-size: 48px; margin-bottom: 8px; }
+  .confirm-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .confirm-sub { font-size: 12px; opacity: 0.85; }
+
+  .booking-summary {
+    margin: 16px;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #eee;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .summary-row:last-child { border-bottom: none; }
+  .summary-key { font-size: 11px; color: #888; }
+  .summary-val { font-size: 12px; font-weight: 600; color: #222; }
+  .summary-val.green { color: #059669; }
+  .summary-val.purple { color: #4f46e5; }
+
+  /* Active viewing */
+  .viewing-map {
+    height: 180px;
+    background: #dde8d8;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .viewing-timer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    z-index: 10;
+  }
+
+  .viewing-address-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(255,255,255,0.95);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    color: #333;
+    font-weight: 600;
+    z-index: 10;
+  }
+
+  .viewing-body { padding: 16px; flex: 1; }
+
+  .viewing-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+  }
+
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: pulse 1.5s infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+    100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  }
+
+  .status-text { font-size: 12px; color: #166534; font-weight: 600; }
+
+  .lock-btn-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+  }
+
+  .lock-btn {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    box-shadow: 0 8px 24px rgba(79,70,229,0.4);
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+
+  .lock-btn.unlocked {
+    background: linear-gradient(135deg, #059669, #047857);
+    box-shadow: 0 8px 24px rgba(5,150,105,0.4);
+  }
+
+  .lock-hint { font-size: 11px; color: #888; text-align: center; }
+
+  .action-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .action-btn {
+    flex: 1;
+    background: #f0f0f0;
+    border-radius: 12px;
+    padding: 10px 6px;
+    text-align: center;
+    font-size: 10px;
+    color: #444;
+    font-weight: 600;
+  }
+
+  .action-btn .action-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+
+  /* Post viewing */
+  .rating-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin: 12px 0;
+    font-size: 28px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 0 16px 16px;
+  }
+
+  .service-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .service-icon { font-size: 22px; margin-bottom: 6px; }
+  .service-name { font-size: 11px; font-weight: 600; color: #333; }
+  .service-price { font-size: 11px; color: #4f46e5; margin-top: 2px; }
+
+  /* Tab bar */
+  .tab-bar {
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    padding: 8px 0 12px;
+    flex-shrink: 0;
+  }
+
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    color: #bbb;
+    cursor: pointer;
+  }
+
+  .tab-item.active { color: #4f46e5; }
+  .tab-icon { font-size: 20px; }
+
+  /* Arrow between screens */
+  .arrow-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5;
+    font-size: 24px;
+    padding: 8px 0;
+    align-self: center;
+    gap: 4px;
+  }
+
+  .arrow-label {
+    font-size: 9px;
+    color: #666;
+    text-align: center;
+    max-width: 60px;
+    line-height: 1.3;
+  }
+
+  /* Divider line in screen */
+  .divider { height: 1px; background: #f0f0f0; margin: 4px 0 12px; }
+
+  /* Info box */
+  .info-box {
+    margin: 0 16px 12px;
+    background: #f0f5ff;
+    border: 1px solid #c7d7ff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 11px;
+    color: #3730a3;
+    line-height: 1.5;
+  }
+
+  /* Screen scroll padding */
+  .scroll-pad { height: 80px; flex-shrink: 0; }
+
+  /* Splash screen */
+  .splash-bg {
+    flex: 1;
+    background: linear-gradient(160deg, #1a1a2e 0%, #2d1b69 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    color: #fff;
+    text-align: center;
+  }
+
+  .splash-logo { font-size: 52px; margin-bottom: 12px; font-weight: 900; letter-spacing: -2px; }
+  .splash-logo span { color: #a78bfa; }
+
+  .splash-tagline { font-size: 16px; opacity: 0.8; margin-bottom: 36px; line-height: 1.5; }
+
+  .splash-features { text-align: left; width: 100%; margin-bottom: 36px; }
+
+  .splash-feat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .feat-icon-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(167,139,250,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .feat-text { font-size: 13px; opacity: 0.85; }
+
+  .splash-cta {
+    width: 100%;
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .splash-login {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .splash-login span { color: #a78bfa; font-weight: 600; }
+
+  /* Notification dot */
+  .notif-dot {
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    position: absolute;
+    top: -2px;
+    right: -2px;
+  }
+
+  /* Flow overview */
+  .flow-overview {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 32px;
+    max-width: 900px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+  }
+
+  .flow-overview h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 16px;
+  }
+
+  .flow-steps {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .flow-step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 72px;
+  }
+
+  .flow-step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ede9fe;
+    border: 2px solid #4f46e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 1;
+  }
+
+  .flow-step-circle:hover { background: #4f46e5; }
+
+  .flow-step-circle.active-step {
+    background: #4f46e5;
+    box-shadow: 0 0 0 4px rgba(79,70,229,0.2);
+  }
+
+  .flow-step-label {
+    font-size: 9px;
+    color: #666;
+    text-align: center;
+    line-height: 1.3;
+    max-width: 68px;
+  }
+
+  .flow-connector {
+    flex: 1;
+    height: 2px;
+    background: #e0e0e0;
+    margin-top: 19px;
+    min-width: 16px;
+  }
+
+  .flow-connector.done { background: #4f46e5; }
+</style>
+</head>
+<body>
+
+<h1>INEED — Seeker Flow</h1>
+<p class="subtitle">Interaktive Wireframes · Klicke auf einen Screen um ihn anzuzeigen</p>
+
+<!-- Flow overview bar -->
+<div class="flow-overview">
+  <h3>📱 Seeker Journey — 9 Screens</h3>
+  <div class="flow-steps">
+    <div class="flow-step-item">
+      <div class="flow-step-circle active-step" onclick="showScreen(0)">🏠</div>
+      <div class="flow-step-label">Splash / Onboarding</div>
+    </div>
+    <div class="flow-connector done"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(1)">🗺️</div>
+      <div class="flow-step-label">Karte & Suche</div>
+    </div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(2)">🏢</div>
+      <div class="flow-step-label">Listing Detail</div>
+    </div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(3)">📅</div>
+      <div class="flow-step-label">Slot & Buchung</div>
+    </div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(4)">🪪</div>
+      <div class="flow-step-label">KYC Verifikation</div>
+    </div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(5)">💳</div>
+      <div class="flow-step-label">Kreditkarte</div>
+    </div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(6)">✅</div>
+      <div class="flow-step-label">Bestätigung</div>
+    </div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(7)">🔓</div>
+      <div class="flow-step-label">Aktive Besichtigung</div>
+    </div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item">
+      <div class="flow-step-circle" onclick="showScreen(8)">⭐</div>
+      <div class="flow-step-label">Post-Viewing</div>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation buttons -->
+<div class="flow-nav">
+  <button class="flow-btn active" onclick="showScreen(0)">01 · Splash</button>
+  <button class="flow-btn" onclick="showScreen(1)">02 · Karte & Suche</button>
+  <button class="flow-btn" onclick="showScreen(2)">03 · Listing Detail</button>
+  <button class="flow-btn" onclick="showScreen(3)">04 · Slot buchen</button>
+  <button class="flow-btn" onclick="showScreen(4)">05 · KYC</button>
+  <button class="flow-btn" onclick="showScreen(5)">06 · Kreditkarte</button>
+  <button class="flow-btn" onclick="showScreen(6)">07 · Bestätigung</button>
+  <button class="flow-btn" onclick="showScreen(7)">08 · Aktive Tour</button>
+  <button class="flow-btn" onclick="showScreen(8)">09 · Post-Viewing</button>
+  <button class="flow-btn" onclick="showAll()">Alle anzeigen</button>
+</div>
+
+<div class="screens-wrapper" id="screens-wrapper">
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 01 · SPLASH -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">01</div>
+    <div class="phone visible" id="phone-0">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <span>●●●</span>
+          <span>WiFi</span>
+          <span>100%</span>
+        </div>
+      </div>
+      <div class="screen">
+        <div class="splash-bg">
+          <div class="splash-logo">i<span>need</span></div>
+          <div class="splash-tagline">Wohnungen finden &amp;<br>direkt besichtigen.</div>
+          <div class="splash-features">
+            <div class="splash-feat">
+              <div class="feat-icon-circle">🗺️</div>
+              <div class="feat-text">Kartensuche mit Radius</div>
+            </div>
+            <div class="splash-feat">
+              <div class="feat-icon-circle">🔓</div>
+              <div class="feat-text">Self-Service Besichtigungen</div>
+            </div>
+            <div class="splash-feat">
+              <div class="feat-icon-circle">⚡</div>
+              <div class="feat-text">Direkt buchen, kein Makler</div>
+            </div>
+          </div>
+          <div class="splash-cta">Jetzt kostenlos starten</div>
+          <div class="splash-login">Bereits Mitglied? <span>Einloggen</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Splash / Onboarding</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 02 · MAP -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">02</div>
+    <div class="phone" id="phone-1">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div>
+      </div>
+      <div class="screen" style="position:relative;overflow:hidden;">
+
+        <!-- Map area fills screen -->
+        <div class="map-area" style="position:absolute;inset:0;">
+          <div class="map-grid"></div>
+          <div class="map-road-h" style="top:40%"></div>
+          <div class="map-road-h" style="top:65%"></div>
+          <div class="map-road-v" style="left:35%"></div>
+          <div class="map-road-v" style="left:70%"></div>
+          <div class="map-block" style="top:22%;left:10%;width:22%;height:14%;"></div>
+          <div class="map-block" style="top:22%;left:40%;width:26%;height:14%;"></div>
+          <div class="map-block" style="top:50%;left:10%;width:18%;height:12%;"></div>
+          <div class="map-block" style="top:50%;left:75%;width:18%;height:12%;"></div>
+
+          <!-- Radius circle -->
+          <div class="radius-circle" style="width:210px;height:210px;top:50%;left:50%;"></div>
+
+          <!-- User location -->
+          <div class="user-dot" style="top:50%;left:50%;"></div>
+
+          <!-- Listing pins -->
+          <div class="pin" style="top:35%;left:28%;">
+            <div class="pin-bubble">€ 1.200/Mo</div>
+          </div>
+          <div class="pin" style="top:42%;left:62%;">
+            <div class="pin-bubble">€ 980/Mo</div>
+          </div>
+          <div class="pin" style="top:60%;left:42%;">
+            <div class="pin-bubble sale">€ 320k</div>
+          </div>
+          <div class="pin" style="top:28%;left:55%;">
+            <div class="pin-bubble">€ 1.550/Mo</div>
+          </div>
+        </div>
+
+        <!-- Search bar overlay -->
+        <div class="map-search-bar">
+          <span>🔍</span>
+          <div class="search-text">Wien, Österreich</div>
+          <div class="icon-btn">👤</div>
+        </div>
+
+        <!-- Filter chips -->
+        <div class="map-filters">
+          <div class="filter-chip active-chip">Alle</div>
+          <div class="filter-chip">Miete</div>
+          <div class="filter-chip">Kauf</div>
+          <div class="filter-chip">2+ Zi</div>
+          <div class="filter-chip">bis 1.500 €</div>
+          <div class="filter-chip">🔑 Smart Lock</div>
+        </div>
+
+        <!-- Radius control -->
+        <div class="radius-control">
+          <div class="radius-label">
+            <span>Suchradius</span>
+            <span class="radius-value">1,5 km</span>
+          </div>
+          <div class="slider-track">
+            <div class="slider-fill"></div>
+            <div class="slider-thumb"></div>
+          </div>
+        </div>
+
+        <!-- Bottom sheet -->
+        <div class="bottom-sheet" style="max-height:240px;overflow-y:auto;">
+          <div class="sheet-handle"></div>
+          <div class="sheet-title">4 Wohnungen in der Nähe</div>
+
+          <div class="listing-card-h">
+            <div class="listing-thumb">🏠</div>
+            <div class="listing-info">
+              <div class="listing-price">€ 1.200 <span>/Monat</span></div>
+              <div class="listing-addr">Mariahilfer Str. 44, Wien</div>
+              <div class="listing-tags">
+                <div class="tag rent">Miete</div>
+                <div class="tag">3 Zi</div>
+                <div class="tag">78 m²</div>
+                <div class="tag lock">Smart Lock</div>
+              </div>
+              <div class="listing-dist">📍 320 m entfernt</div>
+            </div>
+          </div>
+
+          <div class="listing-card-h">
+            <div class="listing-thumb">🏢</div>
+            <div class="listing-info">
+              <div class="listing-price">€ 980 <span>/Monat</span></div>
+              <div class="listing-addr">Neubaugasse 12, Wien</div>
+              <div class="listing-tags">
+                <div class="tag rent">Miete</div>
+                <div class="tag">2 Zi</div>
+                <div class="tag">62 m²</div>
+                <div class="tag cam">Live-Cam</div>
+              </div>
+              <div class="listing-dist">📍 680 m entfernt</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab bar -->
+        <div class="tab-bar" style="position:absolute;bottom:0;left:0;right:0;">
+          <div class="tab-item active"><span class="tab-icon">🗺️</span>Karte</div>
+          <div class="tab-item"><span class="tab-icon">🔍</span>Suche</div>
+          <div class="tab-item"><span class="tab-icon">❤️</span>Merkliste</div>
+          <div class="tab-item"><span class="tab-icon">📅</span>Buchungen</div>
+          <div class="tab-item"><span class="tab-icon">👤</span>Profil</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Karte & Suche</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 03 · LISTING DETAIL -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">03</div>
+    <div class="phone" id="phone-2">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div>
+      </div>
+      <div class="screen">
+        <!-- Hero image -->
+        <div class="detail-hero">
+          <div class="hero-bg">🏠</div>
+          <div class="detail-back">←</div>
+          <div class="detail-fav">🤍</div>
+          <div class="hero-overlay">
+            <div class="hero-badges">
+              <div class="badge badge-purple">Miete</div>
+              <div class="badge badge-orange">🔑 Smart Lock</div>
+            </div>
+          </div>
+          <div class="hero-image-nav">
+            <div class="dot-nav active"></div>
+            <div class="dot-nav"></div>
+            <div class="dot-nav"></div>
+            <div class="dot-nav"></div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="detail-body">
+          <div class="detail-price-row">
+            <div>
+              <div class="detail-price">€ 1.200 <span class="detail-price-sub">/Monat</span></div>
+            </div>
+            <div class="tag rent">Verfügbar ab April</div>
+          </div>
+          <div class="detail-title">Helle 3-Zimmer Wohnung im 7. Bezirk</div>
+          <div class="detail-address">📍 Mariahilfer Str. 44, 1070 Wien · 320 m</div>
+
+          <div class="stats-row">
+            <div class="stat-item">
+              <div class="stat-val">78</div>
+              <div class="stat-lbl">m² Fläche</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">3</div>
+              <div class="stat-lbl">Zimmer</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">2.</div>
+              <div class="stat-lbl">Stockwerk</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">2019</div>
+              <div class="stat-lbl">Baujahr</div>
+            </div>
+          </div>
+
+          <div class="section-title">Beschreibung</div>
+          <div class="desc-text">Moderne Wohnung mit Einbauküche, Fußbodenheizung und großem Balkon. Sehr gute Anbindung (U3, Tram).</div>
+
+          <div class="section-title">Besichtigungsoptionen</div>
+          <div class="tour-row">
+            <div class="tour-btn">
+              <span class="tour-icon">📸</span>
+              Fotos
+            </div>
+            <div class="tour-btn active-tour">
+              <span class="tour-icon">🌐</span>
+              360° Tour
+            </div>
+            <div class="tour-btn">
+              <span class="tour-icon">📹</span>
+              Live-Cam
+            </div>
+            <div class="tour-btn">
+              <span class="tour-icon">🔑</span>
+              Self-Tour
+            </div>
+          </div>
+
+          <div class="scroll-pad"></div>
+        </div>
+
+        <div class="bottom-cta">
+          <div class="btn-primary">Besichtigung buchen</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Listing Detail</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 04 · SLOT BOOKING -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">04</div>
+    <div class="phone" id="phone-3">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div>
+      </div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-back">←</div>
+          <div class="nav-title">Besichtigung buchen</div>
+        </div>
+
+        <!-- Listing mini card -->
+        <div style="padding:12px 16px;">
+          <div class="listing-card-h">
+            <div class="listing-thumb">🏠</div>
+            <div class="listing-info">
+              <div class="listing-price">€ 1.200 <span>/Monat</span></div>
+              <div class="listing-addr">Mariahilfer Str. 44, Wien</div>
+              <div class="listing-tags">
+                <div class="tag">78 m²</div>
+                <div class="tag">3 Zi</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:0 16px 12px;">
+          <div class="section-title">Art der Besichtigung</div>
+          <div style="display:flex;gap:8px;margin-bottom:16px;">
+            <div class="tour-btn active-tour" style="flex:1;padding:10px;">
+              <span class="tour-icon">🔑</span>
+              Self-Service<br><span style="font-size:9px;font-weight:400;">Smart Lock</span>
+            </div>
+            <div class="tour-btn" style="flex:1;padding:10px;">
+              <span class="tour-icon">📹</span>
+              Live-Kamera<br><span style="font-size:9px;font-weight:400;">Video-Tour</span>
+            </div>
+          </div>
+
+          <!-- Calendar row (simplified) -->
+          <div class="section-title">Datum wählen</div>
+          <div style="display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:4px;">
+            <div style="min-width:44px;text-align:center;padding:8px 6px;border-radius:10px;background:#f0f0f0;">
+              <div style="font-size:9px;color:#999;">MO</div>
+              <div style="font-size:14px;font-weight:700;color:#333;">17</div>
+            </div>
+            <div style="min-width:44px;text-align:center;padding:8px 6px;border-radius:10px;background:#4f46e5;">
+              <div style="font-size:9px;color:rgba(255,255,255,0.7);">DI</div>
+              <div style="font-size:14px;font-weight:700;color:#fff;">18</div>
+            </div>
+            <div style="min-width:44px;text-align:center;padding:8px 6px;border-radius:10px;background:#f0f0f0;">
+              <div style="font-size:9px;color:#999;">MI</div>
+              <div style="font-size:14px;font-weight:700;color:#333;">19</div>
+            </div>
+            <div style="min-width:44px;text-align:center;padding:8px 6px;border-radius:10px;background:#f0f0f0;">
+              <div style="font-size:9px;color:#999;">DO</div>
+              <div style="font-size:14px;font-weight:700;color:#333;">20</div>
+            </div>
+            <div style="min-width:44px;text-align:center;padding:8px 6px;border-radius:10px;background:#f0f0f0;">
+              <div style="font-size:9px;color:#999;">FR</div>
+              <div style="font-size:14px;font-weight:700;color:#333;">21</div>
+            </div>
+          </div>
+
+          <div class="availability-title">Verfügbare Zeitslots · Di, 18. März</div>
+          <div class="slot-row">
+            <div class="slot">
+              <div class="slot-time">09:00</div>
+              <div class="slot-type-label">30 Min</div>
+            </div>
+            <div class="slot selected">
+              <div class="slot-time">10:30</div>
+              <div class="slot-type-label">30 Min</div>
+            </div>
+            <div class="slot">
+              <div class="slot-time">14:00</div>
+              <div class="slot-type-label">30 Min</div>
+            </div>
+            <div class="slot">
+              <div class="slot-time">16:00</div>
+              <div class="slot-type-label">30 Min</div>
+            </div>
+          </div>
+
+          <div class="preauth-box">
+            <div class="preauth-icon">ℹ️</div>
+            <div class="preauth-text">
+              <strong>Kaution wird vorgemerkt</strong>
+              € 300 werden auf deiner Karte reserviert und nach der Besichtigung automatisch freigegeben.
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-cta">
+          <div class="btn-primary">Weiter zur Verifizierung →</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Slot buchen</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 05 · KYC -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">05</div>
+    <div class="phone" id="phone-4">
+      <div class="status-bar" style="background:#4f46e5;color:#fff;">
+        <span>9:41</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div>
+      </div>
+      <div class="screen">
+        <div class="kyc-hero">
+          <div class="kyc-icon">🪪</div>
+          <div class="kyc-title">Identität bestätigen</div>
+          <div class="kyc-sub">Einmalig nötig für Self-Service<br>Besichtigungen. Dauert ca. 2 Min.</div>
+        </div>
+
+        <div class="kyc-steps">
+          <div class="kyc-step">
+            <div class="step-circle done">✓</div>
+            <div class="step-content">
+              <div class="step-name">Account erstellt</div>
+              <div class="step-desc">E-Mail verifiziert</div>
+            </div>
+          </div>
+          <div class="kyc-step">
+            <div class="step-circle active">2</div>
+            <div class="step-content">
+              <div class="step-name">Ausweis fotografieren</div>
+              <div class="step-desc">Reisepass, Personalausweis oder Führerschein</div>
+            </div>
+          </div>
+          <div class="kyc-step">
+            <div class="step-circle">3</div>
+            <div class="step-content">
+              <div class="step-name">Selfie aufnehmen</div>
+              <div class="step-desc">Automatischer Liveness-Check</div>
+            </div>
+          </div>
+          <div class="kyc-step">
+            <div class="step-circle">4</div>
+            <div class="step-content">
+              <div class="step-name">Kreditkarte hinterlegen</div>
+              <div class="step-desc">Für Kaution (wird nicht abgebucht)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scan-frame">
+          <div class="scan-icon">📄</div>
+          <div class="scan-label">Vorderseite scannen</div>
+          <div class="scan-sublabel">Ausweisdokument hier platzieren</div>
+        </div>
+
+        <div style="padding:0 16px;">
+          <div class="info-box">🔒 Deine Daten werden verschlüsselt übertragen und nicht gespeichert. Verarbeitung via Stripe Identity (DSGVO-konform).</div>
+        </div>
+
+        <div class="bottom-cta">
+          <div class="btn-primary">Ausweis scannen</div>
+          <div class="btn-secondary">Später fortsetzen</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">KYC Verifikation</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 06 · CREDIT CARD -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">06</div>
+    <div class="phone" id="phone-5">
+      <div class="status-bar">
+        <span>9:41</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div>
+      </div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-back">←</div>
+          <div class="nav-title">Kreditkarte hinterlegen</div>
+        </div>
+
+        <!-- KYC success -->
+        <div style="margin:12px 16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;display:flex;gap:8px;align-items:center;">
+          <span style="font-size:16px;">✅</span>
+          <div style="font-size:12px;color:#166534;font-weight:600;">Identität erfolgreich verifiziert</div>
+        </div>
+
+        <!-- Card visual -->
+        <div class="card-visual">
+          <div class="card-chip">▪️</div>
+          <div class="card-number">•••• •••• •••• 4242</div>
+          <div class="card-bottom">
+            <div>
+              <div class="card-name">Max Mustermann</div>
+              <div class="card-expiry">Gültig bis 12/28</div>
+            </div>
+          </div>
+          <div class="card-brand">💳</div>
+        </div>
+
+        <!-- Form fields -->
+        <div class="form-field" style="margin-top:16px;">
+          <div class="field-label">Karteninhaber</div>
+          <div class="field-input">Max Mustermann</div>
+        </div>
+        <div class="form-field">
+          <div class="field-label">Kartennummer</div>
+          <div class="field-input focused">
+            <span>4242 4242 4242 4242</span>
+            <span style="font-size:16px;">💳</span>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="form-field">
+            <div class="field-label">Ablaufdatum</div>
+            <div class="field-input">12 / 28</div>
+          </div>
+          <div class="form-field">
+            <div class="field-label">CVC</div>
+            <div class="field-input">•••</div>
+          </div>
+        </div>
+
+        <div class="preauth-box" style="margin-top:4px;">
+          <div class="preauth-icon">🔒</div>
+          <div class="preauth-text">
+            <strong>Kautionsbetrag: € 300</strong>
+            Wird nur bei nachgewiesenem Schaden abgebucht. Automatische Freigabe nach 48h.
+          </div>
+        </div>
+
+        <div style="padding:0 16px;margin-top:8px;font-size:10px;color:#999;text-align:center;">
+          Gesichert durch Stripe · PCI-DSS Level 1 zertifiziert
+        </div>
+
+        <div class="bottom-cta">
+          <div class="btn-primary">€ 300 vormerken &amp; buchen</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Kreditkarte & Kaution</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 07 · CONFIRMATION -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">07</div>
+    <div class="phone" id="phone-6">
+      <div class="status-bar" style="background:#059669;color:#fff;">
+        <span>9:41</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>100%</span></div>
+      </div>
+      <div class="screen">
+        <div class="confirm-hero">
+          <div class="confirm-icon">✅</div>
+          <div class="confirm-title">Buchung bestätigt!</div>
+          <div class="confirm-sub">Dein Zugangscode wird am<br>Tag der Besichtigung aktiviert.</div>
+        </div>
+
+        <div class="booking-summary">
+          <div class="summary-row">
+            <div class="summary-key">Objekt</div>
+            <div class="summary-val">Mariahilfer Str. 44, Wien</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-key">Datum</div>
+            <div class="summary-val purple">Di, 18. März · 10:30 Uhr</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-key">Art</div>
+            <div class="summary-val">🔑 Self-Service (30 Min)</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-key">Kaution</div>
+            <div class="summary-val">€ 300 vorgemerkt</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-key">Status Kaution</div>
+            <div class="summary-val green">Freigabe nach 48h</div>
+          </div>
+        </div>
+
+        <div style="padding:0 16px 12px;">
+          <div class="info-box">
+            📱 Du erhältst am Morgen der Besichtigung eine Push-Benachrichtigung mit deinem Zugangscode.
+          </div>
+        </div>
+
+        <div style="padding:0 16px;">
+          <div class="section-title">Nützliche Services für diese Wohnung</div>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">📋</div>
+              <div class="service-name">Grundbuchauszug</div>
+              <div class="service-price">€ 29</div>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">📊</div>
+              <div class="service-name">Bonitätsprüfung</div>
+              <div class="service-price">€ 19</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-cta">
+          <div class="btn-primary">Zur Buchungsübersicht</div>
+          <div class="btn-secondary">Weitere Wohnungen suchen</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Buchungsbestätigung</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 08 · ACTIVE VIEWING -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">08</div>
+    <div class="phone" id="phone-7">
+      <div class="status-bar">
+        <span>10:30</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>98%</span></div>
+      </div>
+      <div class="screen">
+        <!-- Mini map with location -->
+        <div class="viewing-map">
+          <div class="map-grid"></div>
+          <div class="map-road-h" style="top:50%;"></div>
+          <div class="map-road-v" style="left:40%;"></div>
+          <div class="map-block" style="top:20%;left:50%;width:40%;height:25%;"></div>
+          <div class="user-dot" style="top:50%;left:38%;"></div>
+          <div class="pin" style="top:35%;left:50%;">
+            <div class="pin-bubble">📍 Ziel</div>
+          </div>
+          <div class="viewing-timer">⏱ 28:45</div>
+          <div class="viewing-address-tag">Mariahilfer Str. 44</div>
+        </div>
+
+        <div class="viewing-body">
+          <div class="viewing-status">
+            <div class="status-dot"></div>
+            <div class="status-text">Besichtigung aktiv · läuft bis 11:00 Uhr</div>
+          </div>
+
+          <div class="lock-btn-area">
+            <div class="lock-btn unlocked">🔓</div>
+            <div class="lock-hint">Tür entsperrt · Tippen zum Sperren</div>
+          </div>
+
+          <div style="text-align:center;margin-bottom:12px;">
+            <div style="font-size:11px;color:#888;">Zugangscode (Backup)</div>
+            <div style="font-size:22px;font-weight:800;color:#4f46e5;letter-spacing:4px;">7 4 2 9</div>
+          </div>
+
+          <div class="action-row">
+            <div class="action-btn">
+              <span class="action-icon">📸</span>
+              Fotos & Infos
+            </div>
+            <div class="action-btn">
+              <span class="action-icon">📐</span>
+              Grundriss
+            </div>
+            <div class="action-btn">
+              <span class="action-icon">📝</span>
+              Notizen
+            </div>
+            <div class="action-btn">
+              <span class="action-icon">🆘</span>
+              Hilfe
+            </div>
+          </div>
+        </div>
+
+        <div class="bottom-cta">
+          <div class="btn-primary btn-success">Besichtigung beenden</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Aktive Besichtigung</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SCREEN 09 · POST-VIEWING -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">09</div>
+    <div class="phone" id="phone-8">
+      <div class="status-bar">
+        <span>11:02</span>
+        <div class="status-icons"><span>●●●</span><span>WiFi</span><span>97%</span></div>
+      </div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-title">Besichtigung abgeschlossen</div>
+        </div>
+
+        <div style="padding:16px 16px 0;">
+          <!-- Deposit release -->
+          <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:12px;margin-bottom:14px;display:flex;gap:10px;align-items:center;">
+            <span style="font-size:24px;">🔒</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:#166534;">Kaution wird freigegeben</div>
+              <div style="font-size:11px;color:#166534;opacity:0.8;">€ 300 sind in 48h wieder auf deiner Karte.</div>
+            </div>
+          </div>
+
+          <!-- Rating -->
+          <div style="background:#fff;border:1px solid #eee;border-radius:12px;padding:14px;margin-bottom:14px;text-align:center;">
+            <div style="font-size:13px;font-weight:700;color:#333;margin-bottom:8px;">Wie war die Besichtigung?</div>
+            <div class="rating-row">⭐⭐⭐⭐☆</div>
+            <div style="background:#f5f5f5;border-radius:8px;padding:8px 10px;font-size:11px;color:#aaa;text-align:left;margin-top:8px;">Feedback hinzufügen...</div>
+          </div>
+
+          <!-- Interest CTA -->
+          <div style="font-size:13px;font-weight:700;color:#333;margin-bottom:8px;">Interesse an dieser Wohnung?</div>
+          <div class="btn-primary" style="border-radius:12px;padding:13px;font-size:13px;margin-bottom:8px;">Anfrage an Vermieter senden</div>
+          <div class="btn-outline" style="border-radius:12px;padding:11px;font-size:13px;margin-bottom:16px;">Auf Merkliste speichern</div>
+
+          <!-- Services upsell -->
+          <div style="font-size:13px;font-weight:700;color:#333;margin-bottom:8px;">Nächste Schritte</div>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">📋</div>
+              <div class="service-name">Grundbuch&shy;auszug</div>
+              <div class="service-price">€ 29</div>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">📊</div>
+              <div class="service-name">Bonitäts&shy;prüfung</div>
+              <div class="service-price">€ 19</div>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">⚖️</div>
+              <div class="service-name">Notar&shy;termin</div>
+              <div class="service-price">Anfragen</div>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">🔋</div>
+              <div class="service-name">Energie&shy;ausweis</div>
+              <div class="service-price">€ 79</div>
+            </div>
+          </div>
+        </div>
+        <div class="scroll-pad"></div>
+      </div>
+    </div>
+    <div class="screen-label">Post-Viewing</div>
+  </div>
+
+</div>
+
+<script>
+  const totalScreens = 9;
+  let currentScreen = 0;
+  let showingAll = false;
+
+  function showScreen(index) {
+    showingAll = false;
+    currentScreen = index;
+
+    // Update buttons
+    document.querySelectorAll('.flow-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+    });
+
+    // Update step circles
+    document.querySelectorAll('.flow-step-circle').forEach((c, i) => {
+      c.classList.toggle('active-step', i === index);
+    });
+
+    // Show/hide phones
+    document.querySelectorAll('.phone').forEach((phone, i) => {
+      phone.classList.toggle('visible', i === index);
+    });
+
+    document.querySelectorAll('.screen-item').forEach(item => {
+      item.style.display = 'flex';
+    });
+
+    // Hide non-active containers
+    document.querySelectorAll('.screen-item').forEach((item, i) => {
+      item.style.display = i === index ? 'flex' : 'none';
+    });
+
+    // Last button (show all) - deactivate
+    const allBtn = document.querySelectorAll('.flow-btn')[totalScreens];
+    if (allBtn) allBtn.classList.remove('active');
+  }
+
+  function showAll() {
+    showingAll = true;
+    document.querySelectorAll('.flow-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === totalScreens);
+    });
+    document.querySelectorAll('.flow-step-circle').forEach(c => c.classList.remove('active-step'));
+    document.querySelectorAll('.phone').forEach(phone => phone.classList.add('visible'));
+    document.querySelectorAll('.screen-item').forEach(item => item.style.display = 'flex');
+  }
+
+  // Init
+  showScreen(0);
+</script>
+</body>
+</html>

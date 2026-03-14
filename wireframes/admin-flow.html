@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INEED — Admin Flow Wireframes</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0e0e1a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 40px 20px; min-height: 100vh;
+  }
+  h1 { color: #fff; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+  .subtitle { color: #888; font-size: 13px; margin-bottom: 36px; }
+  :root { --accent: #6366f1; --accent-light: #e0e7ff; }
+
+  .flow-nav {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    justify-content: center; margin-bottom: 40px; max-width: 1100px;
+  }
+  .flow-btn {
+    background: #1a1a2e; border: 1px solid #2a2a4a; color: #aaa;
+    padding: 7px 14px; border-radius: 20px; font-size: 12px;
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  }
+  .flow-btn:hover { background: #2a2a4a; color: #fff; }
+  .flow-btn.active { background: #6366f1; border-color: #6366f1; color: #fff; }
+
+  .screens-wrapper { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; max-width: 1600px; }
+
+  .phone-container { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .screen-label { color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .screen-number { color: #6366f1; font-size: 11px; font-weight: 700; }
+
+  /* Admin uses wider "tablet" form factor for dashboard, but mobile for reviews */
+  .phone {
+    width: 320px; height: 640px; background: #f5f5f0; border-radius: 40px;
+    border: 8px solid #1a1a2e; box-shadow: 0 0 0 2px #2a2a4a, 0 20px 60px rgba(0,0,0,0.5);
+    overflow: hidden; position: relative; display: none;
+  }
+  .phone.visible { display: block; }
+
+  .status-bar {
+    height: 28px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 16px; font-size: 11px; font-weight: 600; background: #fff; color: #111; flex-shrink: 0;
+  }
+  .status-icons { display: flex; gap: 4px; align-items: center; }
+
+  .screen {
+    width: 100%; height: calc(100% - 28px); overflow-y: auto; overflow-x: hidden;
+    display: flex; flex-direction: column; background: #f0f0f5;
+  }
+
+  /* NAV */
+  .nav-bar {
+    background: #fff; padding: 12px 16px; display: flex; align-items: center;
+    gap: 12px; border-bottom: 1px solid #eee; flex-shrink: 0;
+  }
+  .nav-title { font-size: 15px; font-weight: 700; color: #111; flex: 1; }
+  .nav-back {
+    width: 32px; height: 32px; border-radius: 50%; background: #f0f0f0;
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+  }
+  .icon-btn {
+    width: 32px; height: 32px; border-radius: 50%; background: #f0f0f0;
+    display: flex; align-items: center; justify-content: center; font-size: 15px; position: relative;
+  }
+  .notif-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; position: absolute; top: -2px; right: -2px; }
+
+  /* BUTTONS */
+  .btn-primary {
+    width: 100%; background: #6366f1; color: #fff; border: none;
+    border-radius: 12px; padding: 13px; font-size: 13px; font-weight: 700;
+    cursor: pointer; text-align: center; display: block;
+  }
+  .btn-danger { background: #dc2626; }
+  .btn-success { background: #059669; }
+  .btn-warn { background: #d97706; }
+  .btn-secondary {
+    width: 100%; background: #f0f0f0; color: #333; border: none;
+    border-radius: 12px; padding: 11px; font-size: 12px; font-weight: 600;
+    cursor: pointer; text-align: center; display: block; margin-top: 8px;
+  }
+  .bottom-cta {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 10px 14px; background: #fff; border-top: 1px solid #eee;
+  }
+  .action-pair { display: flex; gap: 8px; }
+  .action-pair .btn-primary { flex: 1; }
+
+  /* TAB BAR */
+  .tab-bar { background: #fff; border-top: 1px solid #eee; display: flex; padding: 8px 0 12px; flex-shrink: 0; }
+  .tab-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 9px; color: #bbb; }
+  .tab-item.active { color: #6366f1; }
+  .tab-icon { font-size: 18px; }
+
+  /* DASHBOARD */
+  .dash-header {
+    background: linear-gradient(160deg, #1e1b4b, #3730a3);
+    padding: 18px 16px 20px; color: #fff;
+  }
+  .dash-role { font-size: 10px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+  .dash-name { font-size: 18px; font-weight: 800; margin-bottom: 14px; }
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-card {
+    background: rgba(255,255,255,0.12); border-radius: 12px;
+    padding: 10px 12px;
+  }
+  .kpi-val { font-size: 22px; font-weight: 800; }
+  .kpi-lbl { font-size: 9px; opacity: 0.7; margin-top: 2px; }
+  .kpi-delta { font-size: 10px; color: #86efac; margin-top: 2px; }
+
+  /* STAT ROW */
+  .stat-section { padding: 12px 14px 0; }
+  .section-title { font-size: 12px; font-weight: 700; color: #333; margin-bottom: 8px; }
+  .stat-row-cards { display: flex; gap: 6px; }
+  .mini-stat {
+    flex: 1; background: #fff; border-radius: 10px; padding: 8px 10px;
+    border: 1px solid #eee; text-align: center;
+  }
+  .mini-stat-val { font-size: 16px; font-weight: 800; color: #333; }
+  .mini-stat-lbl { font-size: 9px; color: #888; margin-top: 2px; }
+
+  /* ALERT ITEMS */
+  .alert-item {
+    background: #fff; border-radius: 10px; padding: 10px 12px;
+    margin-bottom: 6px; border-left: 4px solid #e0e0e0;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .alert-item.urgent { border-left-color: #dc2626; }
+  .alert-item.warn { border-left-color: #d97706; }
+  .alert-item.info { border-left-color: #6366f1; }
+  .alert-icon { font-size: 18px; flex-shrink: 0; }
+  .alert-title { font-size: 12px; font-weight: 700; color: #222; }
+  .alert-sub { font-size: 10px; color: #888; }
+  .alert-count {
+    margin-left: auto; background: #fee2e2; color: #dc2626;
+    font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 10px; flex-shrink: 0;
+  }
+  .alert-count.warn { background: #fef3c7; color: #d97706; }
+  .alert-count.info { background: #e0e7ff; color: #6366f1; }
+
+  /* REVIEW CARD */
+  .review-card {
+    background: #fff; border-radius: 14px; overflow: hidden;
+    border: 1px solid #eee; margin: 10px 14px;
+  }
+  .review-card-header {
+    padding: 12px 14px; border-bottom: 1px solid #f5f5f5;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .review-thumb {
+    width: 56px; height: 56px; border-radius: 10px; background: #c8d8c0;
+    display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;
+  }
+  .review-title { font-size: 13px; font-weight: 700; color: #222; }
+  .review-sub { font-size: 11px; color: #888; margin-top: 2px; }
+  .review-lister { font-size: 11px; color: #6366f1; margin-top: 2px; }
+  .review-body { padding: 10px 14px; }
+  .review-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #f9f9f9; }
+  .review-row:last-child { border-bottom: none; }
+  .review-key { font-size: 11px; color: #888; }
+  .review-val { font-size: 11px; font-weight: 600; color: #333; }
+
+  /* KYC */
+  .kyc-card { background: #fff; border-radius: 14px; margin: 10px 14px; overflow: hidden; border: 1px solid #eee; }
+  .kyc-card-header { padding: 12px 14px; border-bottom: 1px solid #f5f5f5; display: flex; gap: 10px; align-items: center; }
+  .kyc-avatar { width: 44px; height: 44px; border-radius: 50%; background: #e0e7ff; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .kyc-name { font-size: 13px; font-weight: 700; color: #222; }
+  .kyc-email { font-size: 11px; color: #888; }
+  .kyc-since { font-size: 10px; color: #aaa; }
+  .doc-compare { display: flex; gap: 6px; padding: 10px 14px; }
+  .doc-box {
+    flex: 1; border-radius: 10px; background: #f5f5f5; aspect-ratio: 1.6;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 20px; gap: 4px;
+  }
+  .doc-label { font-size: 9px; color: #888; }
+  .match-bar {
+    margin: 0 14px 10px; background: #f0f0f0; border-radius: 6px;
+    height: 28px; display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .match-score { font-size: 13px; font-weight: 800; }
+  .match-score.high { color: #059669; }
+  .match-score.mid { color: #d97706; }
+
+  /* DISPUTE */
+  .dispute-card { background: #fff; border-radius: 14px; margin: 10px 14px; border: 1px solid #fee2e2; border-left: 4px solid #dc2626; }
+  .dispute-header { padding: 12px 14px; border-bottom: 1px solid #f5f5f5; }
+  .dispute-id { font-size: 10px; color: #dc2626; font-weight: 700; }
+  .dispute-title { font-size: 13px; font-weight: 700; color: #222; }
+  .dispute-date { font-size: 10px; color: #aaa; }
+  .dispute-body { padding: 10px 14px; }
+  .dispute-parties { display: flex; gap: 8px; margin-bottom: 10px; }
+  .party-box {
+    flex: 1; background: #f9f9f9; border-radius: 8px; padding: 8px;
+    text-align: center; font-size: 10px; color: #555;
+  }
+  .party-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+  .party-name { font-weight: 600; color: #333; }
+  .evidence-row { display: flex; gap: 6px; margin-top: 8px; }
+  .evidence-item {
+    flex: 1; background: #f0f0f0; border-radius: 8px; padding: 6px;
+    text-align: center; font-size: 9px; color: #666;
+  }
+  .evidence-icon { font-size: 16px; display: block; margin-bottom: 2px; }
+
+  /* MARKET */
+  .market-card {
+    background: #fff; border-radius: 12px; padding: 12px;
+    margin-bottom: 8px; border: 1px solid #eee; display: flex; gap: 10px; align-items: center;
+  }
+  .market-flag { font-size: 24px; flex-shrink: 0; }
+  .market-name { font-size: 13px; font-weight: 700; color: #222; }
+  .market-stats { font-size: 11px; color: #888; }
+  .market-status {
+    margin-left: auto; font-size: 9px; font-weight: 700;
+    padding: 3px 10px; border-radius: 10px; flex-shrink: 0;
+  }
+  .market-active { background: #d1fae5; color: #065f46; }
+  .market-staging { background: #fef3c7; color: #92400e; }
+  .market-off { background: #f3f4f6; color: #6b7280; }
+
+  /* REVENUE */
+  .rev-header {
+    background: linear-gradient(160deg, #1e1b4b, #312e81);
+    padding: 16px; color: #fff;
+  }
+  .rev-total { font-size: 28px; font-weight: 900; }
+  .rev-period { font-size: 11px; opacity: 0.7; }
+  .rev-delta { font-size: 12px; color: #86efac; margin-top: 4px; }
+  .chart-placeholder {
+    height: 80px; background: rgba(255,255,255,0.05);
+    border-radius: 10px; margin: 10px; display: flex; align-items: flex-end;
+    padding: 8px; gap: 4px; overflow: hidden;
+  }
+  .chart-bar {
+    flex: 1; border-radius: 3px 3px 0 0; background: rgba(99,102,241,0.6);
+    min-height: 8px;
+  }
+  .chart-bar.current { background: #6366f1; }
+  .rev-breakdown { padding: 12px 14px 0; }
+  .rev-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid #f0f0f0;
+  }
+  .rev-row:last-child { border-bottom: none; }
+  .rev-source { display: flex; align-items: center; gap: 8px; }
+  .rev-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .rev-label { font-size: 12px; color: #333; }
+  .rev-amount { font-size: 13px; font-weight: 700; color: #222; }
+  .rev-pct { font-size: 10px; color: #888; }
+
+  /* PROVISION QUEUE */
+  .prov-item {
+    background: #fff; border-radius: 10px; padding: 10px 12px;
+    margin-bottom: 6px; border: 1px solid #eee; display: flex; gap: 8px; align-items: center;
+  }
+  .prov-icon { font-size: 20px; flex-shrink: 0; }
+  .prov-title { font-size: 12px; font-weight: 600; color: #222; }
+  .prov-sub { font-size: 10px; color: #888; }
+  .prov-amount { font-size: 13px; font-weight: 800; color: #6366f1; margin-left: auto; flex-shrink: 0; }
+  .prov-status {
+    font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 8px; margin-left: 6px;
+  }
+  .prov-pending { background: #fef3c7; color: #92400e; }
+  .prov-paid { background: #d1fae5; color: #065f46; }
+
+  /* USER MGMT */
+  .user-row {
+    background: #fff; border-radius: 10px; padding: 10px 12px;
+    margin-bottom: 6px; border: 1px solid #eee; display: flex; gap: 8px; align-items: center;
+  }
+  .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: #e0e7ff; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .user-name { font-size: 12px; font-weight: 700; color: #222; }
+  .user-role { font-size: 10px; color: #888; }
+  .user-badge {
+    margin-left: auto; font-size: 9px; font-weight: 700;
+    padding: 2px 8px; border-radius: 8px; flex-shrink: 0;
+  }
+  .badge-seeker { background: #ede9fe; color: #5b21b6; }
+  .badge-lister { background: #d1fae5; color: #065f46; }
+  .badge-blocked { background: #fee2e2; color: #dc2626; }
+
+  /* LOGIN */
+  .login-bg {
+    flex: 1; background: linear-gradient(160deg, #0e0e1a, #1e1b4b);
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 32px 24px; color: #fff;
+  }
+  .login-logo { font-size: 44px; font-weight: 900; letter-spacing: -2px; margin-bottom: 4px; }
+  .login-logo span { color: #818cf8; }
+  .login-role { font-size: 11px; color: #818cf8; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px; }
+  .login-field {
+    width: 100%; background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 12px 14px; color: #fff; font-size: 13px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .login-field.focused { border-color: #6366f1; }
+  .login-field-icon { font-size: 16px; opacity: 0.6; }
+  .login-field-text { opacity: 0.6; }
+  .login-2fa {
+    width: 100%; background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 12px; padding: 12px; text-align: center;
+    font-size: 12px; color: #a5b4fc; margin-bottom: 16px;
+  }
+  .login-btn {
+    width: 100%; background: #6366f1; color: #fff; border: none;
+    border-radius: 12px; padding: 14px; font-size: 14px; font-weight: 700;
+    text-align: center; margin-bottom: 12px;
+  }
+  .login-security { font-size: 10px; color: rgba(255,255,255,0.3); text-align: center; }
+
+  /* MISC */
+  .info-box {
+    margin: 0 14px 10px; background: #e0e7ff; border: 1px solid #c7d2fe;
+    border-radius: 10px; padding: 9px 11px; font-size: 11px; color: #3730a3; line-height: 1.5;
+  }
+  .scroll-pad { height: 80px; flex-shrink: 0; }
+  .divider { height: 1px; background: #f0f0f0; margin: 4px 0 10px; }
+  .tag { background: #f0f0f0; color: #666; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+
+  /* FLOW OVERVIEW */
+  .flow-overview {
+    background: #111128; border: 1px solid #2a2a4a; border-radius: 16px;
+    padding: 20px; margin-bottom: 32px; max-width: 1100px; width: 100%;
+  }
+  .flow-overview h3 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+  .flow-steps { display: flex; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+  .flow-step-item { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 72px; }
+  .flow-step-circle {
+    width: 40px; height: 40px; border-radius: 50%; background: #1a1a3a;
+    border: 2px solid #6366f1; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; transition: all 0.2s; z-index: 1;
+  }
+  .flow-step-circle:hover, .flow-step-circle.active-step { background: #6366f1; box-shadow: 0 0 0 4px rgba(99,102,241,0.2); }
+  .flow-step-label { font-size: 9px; color: #666; text-align: center; line-height: 1.3; max-width: 68px; }
+  .flow-connector { flex: 1; height: 2px; background: #2a2a4a; margin-top: 19px; min-width: 16px; }
+
+  .status-pill { font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 10px; }
+  .pill-green { background: #d1fae5; color: #065f46; }
+  .pill-yellow { background: #fef3c7; color: #92400e; }
+  .pill-red { background: #fee2e2; color: #dc2626; }
+  .pill-grey { background: #f3f4f6; color: #6b7280; }
+  .pill-blue { background: #e0e7ff; color: #3730a3; }
+</style>
+</head>
+<body>
+
+<h1>INEED — Admin Flow</h1>
+<p class="subtitle">Interaktive Wireframes · Indigo · 9 Screens</p>
+
+<div class="flow-overview">
+  <h3>⚙️ Admin Journey — 9 Screens</h3>
+  <div class="flow-steps">
+    <div class="flow-step-item"><div class="flow-step-circle active-step" onclick="showScreen(0)">🔐</div><div class="flow-step-label">Login</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(1)">📊</div><div class="flow-step-label">Dashboard</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(2)">🏠</div><div class="flow-step-label">Listing Review</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(3)">🪪</div><div class="flow-step-label">KYC Review</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(4)">⚠️</div><div class="flow-step-label">Dispute</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(5)">💶</div><div class="flow-step-label">Umsatz & Provisionen</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(6)">👥</div><div class="flow-step-label">User Management</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(7)">🗺️</div><div class="flow-step-label">Märkte</div></div>
+    <div class="flow-connector"></div>
+    <div class="flow-step-item"><div class="flow-step-circle" onclick="showScreen(8)">⚙️</div><div class="flow-step-label">Einstellungen</div></div>
+  </div>
+</div>
+
+<div class="flow-nav">
+  <button class="flow-btn active" onclick="showScreen(0)">01 · Login</button>
+  <button class="flow-btn" onclick="showScreen(1)">02 · Dashboard</button>
+  <button class="flow-btn" onclick="showScreen(2)">03 · Listing Review</button>
+  <button class="flow-btn" onclick="showScreen(3)">04 · KYC Review</button>
+  <button class="flow-btn" onclick="showScreen(4)">05 · Dispute</button>
+  <button class="flow-btn" onclick="showScreen(5)">06 · Umsatz</button>
+  <button class="flow-btn" onclick="showScreen(6)">07 · User Mgmt</button>
+  <button class="flow-btn" onclick="showScreen(7)">08 · Märkte</button>
+  <button class="flow-btn" onclick="showScreen(8)">09 · Einstellungen</button>
+  <button class="flow-btn" onclick="showAll()">Alle anzeigen</button>
+</div>
+
+<div class="screens-wrapper" id="screens-wrapper">
+
+  <!-- ═══════════════════════════ -->
+  <!-- 01 · LOGIN -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">01</div>
+    <div class="phone visible" id="phone-0">
+      <div class="status-bar" style="background:#0e0e1a;color:#fff;">
+        <span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div>
+      </div>
+      <div class="screen">
+        <div class="login-bg">
+          <div class="login-logo">i<span>need</span></div>
+          <div class="login-role">Admin Panel</div>
+          <div style="width:100%;">
+            <div class="login-field focused">
+              <span class="login-field-icon">✉️</span>
+              <span style="color:#fff;">admin@ineed.app</span>
+            </div>
+            <div class="login-field">
+              <span class="login-field-icon">🔒</span>
+              <span class="login-field-text">Passwort</span>
+            </div>
+            <div class="login-2fa">
+              🔐 2FA-Code erforderlich<br>
+              <span style="font-size:11px;opacity:0.7;">Google Authenticator</span>
+            </div>
+            <div style="display:flex;gap:8px;margin-bottom:12px;">
+              <div style="flex:1;height:44px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(99,102,241,0.4);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#a5b4fc;letter-spacing:6px;">• • •</div>
+              <div style="flex:1;height:44px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:rgba(255,255,255,0.2);letter-spacing:6px;">• • •</div>
+            </div>
+            <div class="login-btn">Einloggen</div>
+            <div class="login-security">🔒 Zugang nur für autorisierte Administratoren · TLS 1.3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Admin Login</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 02 · DASHBOARD -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">02</div>
+    <div class="phone" id="phone-1">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="dash-header">
+          <div class="dash-role">Admin · Wien Pilot</div>
+          <div class="dash-name">Übersicht</div>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-val">43</div>
+              <div class="kpi-lbl">Aktive Listings</div>
+              <div class="kpi-delta">↑ +6 diese Woche</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val">€ 18.2k</div>
+              <div class="kpi-lbl">MRR (Provisionen)</div>
+              <div class="kpi-delta">↑ +12% vs. Vormonat</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val">287</div>
+              <div class="kpi-lbl">Registrierte User</div>
+              <div class="kpi-delta">↑ +34 diese Woche</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-val">64</div>
+              <div class="kpi-lbl">Besichtigungen</div>
+              <div class="kpi-delta">↑ diese Woche</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-section">
+          <div class="section-title">Offene Aufgaben</div>
+          <div class="alert-item urgent">
+            <div class="alert-icon">⚠️</div>
+            <div><div class="alert-title">Disputes</div><div class="alert-sub">Offen &gt; 24h</div></div>
+            <div class="alert-count">2</div>
+          </div>
+          <div class="alert-item warn">
+            <div class="alert-icon">🪪</div>
+            <div><div class="alert-title">KYC-Prüfungen</div><div class="alert-sub">Warten auf Freigabe</div></div>
+            <div class="alert-count warn">7</div>
+          </div>
+          <div class="alert-item warn">
+            <div class="alert-icon">🏠</div>
+            <div><div class="alert-title">Listing-Reviews</div><div class="alert-sub">Neue Inserate</div></div>
+            <div class="alert-count warn">5</div>
+          </div>
+          <div class="alert-item info">
+            <div class="alert-icon">💶</div>
+            <div><div class="alert-title">Provisionen ausstehend</div><div class="alert-sub">Auszahlung offen</div></div>
+            <div class="alert-count info">3</div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <div class="section-title">Heute · Live-Besichtigungen</div>
+            <div style="background:#fff;border-radius:10px;padding:10px 12px;border:1px solid #eee;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+              <div>
+                <div style="font-size:12px;font-weight:700;">Mariahilfer Str. 44</div>
+                <div style="font-size:10px;color:#888;">10:30 · Max M. · Self-Service</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:4px;">
+                <div style="width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 1.5s infinite;"></div>
+                <span style="font-size:10px;color:#059669;font-weight:700;">Live</span>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:10px;padding:10px 12px;border:1px solid #eee;display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:12px;font-weight:700;">Neubaugasse 12</div>
+                <div style="font-size:10px;color:#888;">14:00 · Sarah B. · Live-Cam</div>
+              </div>
+              <div class="status-pill pill-grey">Geplant</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-pad"></div>
+        <div class="tab-bar">
+          <div class="tab-item active"><span class="tab-icon">📊</span>Übersicht</div>
+          <div class="tab-item"><span class="tab-icon">✅</span>Review</div>
+          <div class="tab-item"><span class="tab-icon">⚠️</span>Disputes</div>
+          <div class="tab-item"><span class="tab-icon">💶</span>Umsatz</div>
+          <div class="tab-item"><span class="tab-icon">⚙️</span>Mehr</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Dashboard</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 03 · LISTING REVIEW -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">03</div>
+    <div class="phone" id="phone-2">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-back">←</div>
+          <div class="nav-title">Listing Review</div>
+          <div style="background:#fef3c7;color:#92400e;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;">5 offen</div>
+        </div>
+
+        <!-- Filter tabs -->
+        <div style="display:flex;gap:6px;padding:10px 14px;background:#fff;border-bottom:1px solid #eee;flex-shrink:0;">
+          <div style="background:#6366f1;color:#fff;border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;">In Prüfung (5)</div>
+          <div style="background:#f0f0f0;color:#888;border-radius:20px;padding:5px 12px;font-size:11px;">Freigegeben</div>
+          <div style="background:#f0f0f0;color:#888;border-radius:20px;padding:5px 12px;font-size:11px;">Abgelehnt</div>
+        </div>
+
+        <!-- Listing to review -->
+        <div class="review-card">
+          <div class="review-card-header">
+            <div class="review-thumb">🏠</div>
+            <div style="flex:1;">
+              <div class="review-title">Praterstraße 8, Wien</div>
+              <div class="review-sub">4 Zi · 92 m² · Kauf</div>
+              <div class="review-lister">👤 Thomas K. (Lister seit Jan 2026)</div>
+            </div>
+            <div class="status-pill pill-yellow">Neu</div>
+          </div>
+          <div class="review-body">
+            <div class="review-row"><span class="review-key">Preis</span><span class="review-val">€ 320.000</span></div>
+            <div class="review-row"><span class="review-key">Fotos</span><span class="review-val">6 hochgeladen ✓</span></div>
+            <div class="review-row"><span class="review-key">Adresse verifiziert</span><span class="review-val">✓ Google Maps</span></div>
+            <div class="review-row"><span class="review-key">Smart Lock</span><span class="review-val">Nuki verbunden ✓</span></div>
+            <div class="review-row"><span class="review-key">Eigentumsnachweis</span><span class="review-val" style="color:#d97706;">⚠️ Fehlt</span></div>
+            <div class="review-row"><span class="review-key">360°-Tour</span><span class="review-val" style="color:#aaa;">Nicht hochgeladen</span></div>
+          </div>
+        </div>
+
+        <div style="padding:0 14px 10px;">
+          <div class="info-box" style="margin:0 0 10px;">
+            ⚠️ <strong>Auffälligkeit:</strong> Eigentumsnachweis fehlt. Lister hat Grundbuchauszug noch nicht hochgeladen.
+          </div>
+
+          <div style="margin-bottom:8px;">
+            <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;">Notiz an Lister (optional)</div>
+            <div style="background:#fff;border:1.5px solid #e0e0e0;border-radius:10px;padding:8px 10px;font-size:12px;color:#bbb;height:52px;">Nachricht eingeben...</div>
+          </div>
+
+          <div class="action-pair">
+            <div class="btn-primary btn-success" style="flex:1;padding:11px;font-size:12px;">✓ Freigeben</div>
+            <div class="btn-primary btn-danger" style="flex:1;padding:11px;font-size:12px;">✕ Ablehnen</div>
+          </div>
+          <div class="btn-secondary" style="margin-top:6px;font-size:11px;">📋 Nachforderung senden</div>
+        </div>
+
+        <div class="scroll-pad"></div>
+      </div>
+    </div>
+    <div class="screen-label">Listing Review</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 04 · KYC REVIEW -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">04</div>
+    <div class="phone" id="phone-3">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-back">←</div>
+          <div class="nav-title">KYC Review</div>
+          <div style="background:#fef3c7;color:#92400e;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;">7 offen</div>
+        </div>
+
+        <div class="kyc-card">
+          <div class="kyc-card-header">
+            <div class="kyc-avatar">👤</div>
+            <div style="flex:1;">
+              <div class="kyc-name">Anna Schmidt</div>
+              <div class="kyc-email">anna.s@email.at</div>
+              <div class="kyc-since">Registriert heute, 08:14 · Seeker</div>
+            </div>
+            <div class="status-pill pill-yellow">Ausstehend</div>
+          </div>
+
+          <!-- Document comparison -->
+          <div style="padding:10px 14px 4px;">
+            <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px;">Eingereichte Dokumente</div>
+          </div>
+          <div class="doc-compare">
+            <div class="doc-box">
+              <span style="font-size:28px;">🪪</span>
+              <span class="doc-label">Ausweis Vorderseite</span>
+            </div>
+            <div class="doc-box">
+              <span style="font-size:28px;">🔄</span>
+              <span class="doc-label">Ausweis Rückseite</span>
+            </div>
+            <div class="doc-box">
+              <span style="font-size:28px;">🤳</span>
+              <span class="doc-label">Selfie Live</span>
+            </div>
+          </div>
+
+          <!-- AI Match Score -->
+          <div class="match-bar">
+            <span style="font-size:12px;">🤖 KI-Abgleich:</span>
+            <span class="match-score high">96% Übereinstimmung</span>
+            <span style="font-size:10px;color:#888;">Foto ↔ Selfie</span>
+          </div>
+
+          <div style="padding:0 14px 10px;">
+            <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px;">Extrahierte Daten (OCR)</div>
+            <div class="review-row" style="padding:5px 0;border-bottom:1px solid #f5f5f5;"><span class="review-key">Name</span><span class="review-val">Anna Schmidt ✓</span></div>
+            <div class="review-row" style="padding:5px 0;border-bottom:1px solid #f5f5f5;"><span class="review-key">Geburtsdatum</span><span class="review-val">15.03.1992</span></div>
+            <div class="review-row" style="padding:5px 0;border-bottom:1px solid #f5f5f5;"><span class="review-key">Ausweis-Nr.</span><span class="review-val">AT-P-4821993</span></div>
+            <div class="review-row" style="padding:5px 0;"><span class="review-key">Ablaufdatum</span><span class="review-val" style="color:#059669;">03.2031 ✓</span></div>
+          </div>
+        </div>
+
+        <div style="padding:0 14px 10px;">
+          <div class="action-pair">
+            <div class="btn-primary btn-success" style="flex:1;padding:11px;font-size:12px;">✓ KYC freigeben</div>
+            <div class="btn-primary btn-danger" style="flex:1;padding:11px;font-size:12px;">✕ Ablehnen</div>
+          </div>
+          <div class="btn-secondary" style="font-size:11px;margin-top:6px;">🔍 Manuelle Prüfung markieren</div>
+        </div>
+
+        <div class="scroll-pad"></div>
+      </div>
+    </div>
+    <div class="screen-label">KYC Review</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 05 · DISPUTE -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">05</div>
+    <div class="phone" id="phone-4">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-back">←</div>
+          <div class="nav-title">Dispute Management</div>
+          <div style="background:#fee2e2;color:#dc2626;font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;">2 dringend</div>
+        </div>
+
+        <div style="padding:10px 14px 0;">
+          <div class="dispute-card">
+            <div class="dispute-header">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div class="dispute-id">#DSP-2026-047</div>
+                <div class="status-pill pill-red">Dringend · 38h offen</div>
+              </div>
+              <div class="dispute-title">Schaden nach Besichtigung gemeldet</div>
+              <div class="dispute-date">Mariahilfer Str. 44 · 17. März 2026</div>
+            </div>
+            <div class="dispute-body">
+              <div class="dispute-parties">
+                <div class="party-box">
+                  <span class="party-icon">🏠</span>
+                  <div class="party-name">Thomas K.</div>
+                  <div>Lister</div>
+                </div>
+                <div style="display:flex;align-items:center;font-size:18px;color:#dc2626;">⚡</div>
+                <div class="party-box">
+                  <span class="party-icon">👤</span>
+                  <div class="party-name">Max M.</div>
+                  <div>Seeker</div>
+                </div>
+              </div>
+
+              <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:4px;">Schadensmeldung</div>
+              <div style="font-size:11px;color:#555;line-height:1.5;background:#fef2f2;border-radius:8px;padding:8px;margin-bottom:10px;">
+                "Kratzer am Parkettboden im Wohnzimmer, ca. 30cm. Verursacht während der Besichtigung am 17.03."
+              </div>
+
+              <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:4px;">Beweise</div>
+              <div class="evidence-row">
+                <div class="evidence-item"><span class="evidence-icon">📸</span>3 Fotos (Lister)</div>
+                <div class="evidence-item"><span class="evidence-icon">📹</span>Kamera-Log</div>
+                <div class="evidence-item"><span class="evidence-icon">🔒</span>Lock-Protokoll</div>
+                <div class="evidence-item"><span class="evidence-icon">💳</span>€ 300 reserviert</div>
+              </div>
+
+              <div style="margin-top:12px;padding-top:10px;border-top:1px solid #f5f5f5;">
+                <div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px;">Admin-Entscheidung</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                  <div class="btn-primary btn-danger" style="padding:9px;font-size:11px;border-radius:10px;">💳 Kaution einziehen</div>
+                  <div class="btn-primary btn-success" style="padding:9px;font-size:11px;border-radius:10px;">🔓 Kaution freigeben</div>
+                </div>
+                <div class="btn-secondary" style="font-size:11px;margin-top:6px;">📋 Teilbetrag festlegen</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-pad"></div>
+      </div>
+    </div>
+    <div class="screen-label">Dispute</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 06 · UMSATZ & PROVISIONEN -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">06</div>
+    <div class="phone" id="phone-5">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="rev-header">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <div>
+              <div style="font-size:10px;opacity:0.6;text-transform:uppercase;">März 2026 · Wien</div>
+              <div class="rev-total">€ 43.450</div>
+              <div class="rev-period">Gesamtumsatz MTD</div>
+              <div class="rev-delta">↑ +18% vs. Februar</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:6px 10px;font-size:11px;color:#a5b4fc;">März ▾</div>
+          </div>
+          <!-- Chart -->
+          <div class="chart-placeholder">
+            <div class="chart-bar" style="height:30%;"></div>
+            <div class="chart-bar" style="height:45%;"></div>
+            <div class="chart-bar" style="height:35%;"></div>
+            <div class="chart-bar" style="height:60%;"></div>
+            <div class="chart-bar" style="height:50%;"></div>
+            <div class="chart-bar" style="height:75%;"></div>
+            <div class="chart-bar" style="height:65%;"></div>
+            <div class="chart-bar" style="height:80%;"></div>
+            <div class="chart-bar" style="height:70%;"></div>
+            <div class="chart-bar current" style="height:90%;"></div>
+            <div class="chart-bar" style="height:20%;opacity:0.3;"></div>
+            <div class="chart-bar" style="height:20%;opacity:0.3;"></div>
+          </div>
+        </div>
+
+        <div class="rev-breakdown">
+          <div class="section-title">Umsatz nach Quelle</div>
+          <div class="rev-row">
+            <div class="rev-source"><div class="rev-dot" style="background:#6366f1;"></div><div class="rev-label">Miet-Provisionen</div></div>
+            <div><div class="rev-amount">€ 36.000</div><div class="rev-pct">83%</div></div>
+          </div>
+          <div class="rev-row">
+            <div class="rev-source"><div class="rev-dot" style="background:#059669;"></div><div class="rev-label">Kauf-Provisionen</div></div>
+            <div><div class="rev-amount">€ 7.000</div><div class="rev-pct">16%</div></div>
+          </div>
+          <div class="rev-row">
+            <div class="rev-source"><div class="rev-dot" style="background:#d97706;"></div><div class="rev-label">Services Marketplace</div></div>
+            <div><div class="rev-amount">€ 450</div><div class="rev-pct">1%</div></div>
+          </div>
+        </div>
+
+        <div style="padding:10px 14px 0;">
+          <div class="section-title">Ausstehende Provisionen</div>
+          <div class="prov-item">
+            <div class="prov-icon">🏠</div>
+            <div>
+              <div class="prov-title">Mariahilfer Str. 44 · Miete</div>
+              <div class="prov-sub">Thomas K. → Max M. · 3× € 1.200</div>
+            </div>
+            <div>
+              <div class="prov-amount">€ 3.600</div>
+              <div class="prov-status prov-pending">offen</div>
+            </div>
+          </div>
+          <div class="prov-item">
+            <div class="prov-icon">🏢</div>
+            <div>
+              <div class="prov-title">Ringstraße 22 · Kauf</div>
+              <div class="prov-sub">Maria S. → Klaus W. · 1% von € 450k</div>
+            </div>
+            <div>
+              <div class="prov-amount">€ 4.500</div>
+              <div class="prov-status prov-pending">offen</div>
+            </div>
+          </div>
+          <div class="prov-item" style="opacity:0.6;">
+            <div class="prov-icon">🏠</div>
+            <div>
+              <div class="prov-title">Neubaugasse 12 · Miete</div>
+              <div class="prov-sub">Petra M. → Leon K. · 3× € 980</div>
+            </div>
+            <div>
+              <div class="prov-amount">€ 2.940</div>
+              <div class="prov-status prov-paid">bezahlt</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-pad"></div>
+        <div class="tab-bar">
+          <div class="tab-item active"><span class="tab-icon">📊</span>Übersicht</div>
+          <div class="tab-item"><span class="tab-icon">✅</span>Review</div>
+          <div class="tab-item"><span class="tab-icon">⚠️</span>Disputes</div>
+          <div class="tab-item"><span class="tab-icon">💶</span>Umsatz</div>
+          <div class="tab-item"><span class="tab-icon">⚙️</span>Mehr</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Umsatz & Provisionen</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 07 · USER MANAGEMENT -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">07</div>
+    <div class="phone" id="phone-6">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-back">←</div>
+          <div class="nav-title">User Management</div>
+          <div class="icon-btn">🔍</div>
+        </div>
+
+        <!-- Search + filters -->
+        <div style="padding:10px 14px;background:#fff;border-bottom:1px solid #eee;flex-shrink:0;">
+          <div style="background:#f5f5f5;border-radius:10px;padding:9px 12px;display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+            <span>🔍</span>
+            <span style="font-size:12px;color:#aaa;">Name, E-Mail oder ID suchen...</span>
+          </div>
+          <div style="display:flex;gap:6px;">
+            <div style="background:#6366f1;color:#fff;border-radius:20px;padding:4px 10px;font-size:10px;font-weight:700;">Alle (287)</div>
+            <div style="background:#f0f0f0;color:#888;border-radius:20px;padding:4px 10px;font-size:10px;">Seeker</div>
+            <div style="background:#f0f0f0;color:#888;border-radius:20px;padding:4px 10px;font-size:10px;">Lister</div>
+            <div style="background:#fee2e2;color:#dc2626;border-radius:20px;padding:4px 10px;font-size:10px;">Gesperrt (2)</div>
+          </div>
+        </div>
+
+        <div style="padding:10px 14px 0;">
+          <div class="user-row">
+            <div class="user-avatar">👤</div>
+            <div style="flex:1;">
+              <div class="user-name">Max Mustermann</div>
+              <div class="user-role">✓ KYC · Seeker · Wien</div>
+            </div>
+            <div class="user-badge badge-seeker">Seeker</div>
+          </div>
+          <div class="user-row">
+            <div class="user-avatar">👤</div>
+            <div style="flex:1;">
+              <div class="user-name">Thomas K.</div>
+              <div class="user-role">✓ KYC · Lister · 2 Listings</div>
+            </div>
+            <div class="user-badge badge-lister">Lister</div>
+          </div>
+          <div class="user-row">
+            <div class="user-avatar">👤</div>
+            <div style="flex:1;">
+              <div class="user-name">Sarah B.</div>
+              <div class="user-role">✓ KYC · Seeker · Wien</div>
+            </div>
+            <div class="user-badge badge-seeker">Seeker</div>
+          </div>
+          <div class="user-row" style="border:1px solid #fee2e2;">
+            <div class="user-avatar" style="background:#fee2e2;">🚫</div>
+            <div style="flex:1;">
+              <div class="user-name">Peter V.</div>
+              <div class="user-role" style="color:#dc2626;">Gesperrt · Dispute #047</div>
+            </div>
+            <div class="user-badge badge-blocked">Gesperrt</div>
+          </div>
+          <div class="user-row">
+            <div class="user-avatar" style="background:#fef3c7;">⏳</div>
+            <div style="flex:1;">
+              <div class="user-name">Anna Schmidt</div>
+              <div class="user-role" style="color:#d97706;">KYC ausstehend</div>
+            </div>
+            <div class="user-badge" style="background:#fef3c7;color:#92400e;">Pending</div>
+          </div>
+        </div>
+
+        <!-- User detail tapped -->
+        <div style="padding:0 14px 10px;margin-top:6px;">
+          <div style="background:#fff;border-radius:14px;border:1px solid #eee;overflow:hidden;">
+            <div style="background:#f0f0f5;padding:10px 12px;font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:0.5px;">Schnellaktionen · Max Mustermann</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+              <div style="padding:10px 12px;border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;font-size:11px;color:#333;text-align:center;cursor:pointer;">📋 Buchungen (3)</div>
+              <div style="padding:10px 12px;border-bottom:1px solid #f0f0f0;font-size:11px;color:#333;text-align:center;cursor:pointer;">📨 Nachricht senden</div>
+              <div style="padding:10px 12px;border-right:1px solid #f0f0f0;font-size:11px;color:#333;text-align:center;cursor:pointer;">🪪 KYC ansehen</div>
+              <div style="padding:10px 12px;font-size:11px;color:#dc2626;text-align:center;cursor:pointer;">🚫 Sperren</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-pad"></div>
+      </div>
+    </div>
+    <div class="screen-label">User Management</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 08 · MÄRKTE -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">08</div>
+    <div class="phone" id="phone-7">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-back">←</div>
+          <div class="nav-title">Märkte & Städte</div>
+          <div style="font-size:20px;cursor:pointer;">＋</div>
+        </div>
+
+        <div style="padding:10px 14px 0;">
+          <div class="info-box" style="margin:0 0 12px;">
+            🗺️ Jeder neue Markt entspricht einer DB-Zeile. Aktivierung schaltet die Stadt auf der App-Karte frei.
+          </div>
+
+          <div class="section-title">Aktive Märkte</div>
+          <div class="market-card">
+            <div class="market-flag">🇦🇹</div>
+            <div style="flex:1;">
+              <div class="market-name">Wien</div>
+              <div class="market-stats">43 Listings · 287 User · € 43.4k MRR</div>
+            </div>
+            <div class="market-status market-active">Aktiv</div>
+          </div>
+
+          <div class="section-title" style="margin-top:10px;">In Vorbereitung</div>
+          <div class="market-card">
+            <div class="market-flag">🇩🇪</div>
+            <div style="flex:1;">
+              <div class="market-name">München</div>
+              <div class="market-stats">0 Listings · Launch geplant Q3 2026</div>
+            </div>
+            <div class="market-status market-staging">Staging</div>
+          </div>
+          <div class="market-card">
+            <div class="market-flag">🇩🇪</div>
+            <div style="flex:1;">
+              <div class="market-name">Berlin</div>
+              <div class="market-stats">0 Listings · Konzeptphase</div>
+            </div>
+            <div class="market-status market-off">Inaktiv</div>
+          </div>
+          <div class="market-card">
+            <div class="market-flag">🇨🇭</div>
+            <div style="flex:1;">
+              <div class="market-name">Zürich</div>
+              <div class="market-stats">0 Listings · CHF geplant</div>
+            </div>
+            <div class="market-status market-off">Inaktiv</div>
+          </div>
+
+          <!-- New market CTA -->
+          <div style="background:#fff;border:2px dashed #c7d2fe;border-radius:14px;padding:16px;text-align:center;margin-top:10px;cursor:pointer;">
+            <div style="font-size:24px;margin-bottom:6px;">＋</div>
+            <div style="font-size:13px;font-weight:700;color:#6366f1;">Neuen Markt hinzufügen</div>
+            <div style="font-size:11px;color:#888;margin-top:2px;">Stadt, Land, Währung, Provision-Sätze</div>
+          </div>
+        </div>
+
+        <div class="scroll-pad"></div>
+      </div>
+    </div>
+    <div class="screen-label">Märkte & Städte</div>
+  </div>
+
+  <!-- ═══════════════════════════ -->
+  <!-- 09 · EINSTELLUNGEN -->
+  <!-- ═══════════════════════════ -->
+  <div class="phone-container screen-item">
+    <div class="screen-number">09</div>
+    <div class="phone" id="phone-8">
+      <div class="status-bar"><span>9:41</span><div class="status-icons"><span>●●●</span><span>100%</span></div></div>
+      <div class="screen">
+        <div class="nav-bar">
+          <div class="nav-title">Plattform-Einstellungen</div>
+        </div>
+
+        <div style="padding:12px 14px 0;">
+
+          <div class="section-title">Provisions-Konfiguration</div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #eee;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #f5f5f5;align-items:center;">
+              <div><div style="font-size:12px;font-weight:700;">Kauf-Provision</div><div style="font-size:10px;color:#888;">% des Kaufpreises</div></div>
+              <div style="font-size:14px;font-weight:800;color:#6366f1;">1,0 %</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;align-items:center;">
+              <div><div style="font-size:12px;font-weight:700;">Miete-Provision</div><div style="font-size:10px;color:#888;">× Monatsmiete</div></div>
+              <div style="font-size:14px;font-weight:800;color:#6366f1;">3×</div>
+            </div>
+          </div>
+
+          <div class="section-title">Kaution (Self-Service)</div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #eee;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #f5f5f5;align-items:center;">
+              <div><div style="font-size:12px;font-weight:700;">Standard-Kautionsbetrag</div><div style="font-size:10px;color:#888;">Pre-Auth Betrag</div></div>
+              <div style="font-size:14px;font-weight:800;color:#6366f1;">€ 300</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;align-items:center;">
+              <div><div style="font-size:12px;font-weight:700;">Auto-Release nach</div><div style="font-size:10px;color:#888;">Stunden nach Besichtigung</div></div>
+              <div style="font-size:14px;font-weight:800;color:#6366f1;">48h</div>
+            </div>
+          </div>
+
+          <div class="section-title">KYC & Verifizierung</div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #eee;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #f5f5f5;align-items:center;">
+              <div><div style="font-size:12px;font-weight:700;">Auto-KYC (KI)</div><div style="font-size:10px;color:#888;">Bei Score ≥ 90% automatisch</div></div>
+              <div style="width:38px;height:22px;background:#6366f1;border-radius:11px;position:relative;"><div style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:3px;right:3px;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;align-items:center;">
+              <div><div style="font-size:12px;font-weight:700;">Manuelle Review bei Score &lt; 90%</div></div>
+              <div style="width:38px;height:22px;background:#6366f1;border-radius:11px;position:relative;"><div style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:3px;right:3px;"></div></div>
+            </div>
+          </div>
+
+          <div class="section-title">Listing Review</div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;border:1px solid #eee;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;padding:10px 12px;align-items:center;">
+              <div><div style="font-size:12px;font-weight:700;">Manueller Review erforderlich</div><div style="font-size:10px;color:#888;">Phase 1: alle Listings</div></div>
+              <div style="width:38px;height:22px;background:#6366f1;border-radius:11px;position:relative;"><div style="width:16px;height:16px;background:#fff;border-radius:50%;position:absolute;top:3px;right:3px;"></div></div>
+            </div>
+          </div>
+
+          <div class="btn-primary" style="padding:12px;">Änderungen speichern</div>
+          <div style="margin-top:20px;padding:12px;background:#fee2e2;border-radius:12px;text-align:center;font-size:12px;color:#dc2626;font-weight:600;cursor:pointer;">⚠️ Plattform in Wartungsmodus versetzen</div>
+        </div>
+
+        <div class="scroll-pad"></div>
+        <div class="tab-bar">
+          <div class="tab-item"><span class="tab-icon">📊</span>Übersicht</div>
+          <div class="tab-item"><span class="tab-icon">✅</span>Review</div>
+          <div class="tab-item"><span class="tab-icon">⚠️</span>Disputes</div>
+          <div class="tab-item"><span class="tab-icon">💶</span>Umsatz</div>
+          <div class="tab-item active"><span class="tab-icon">⚙️</span>Mehr</div>
+        </div>
+      </div>
+    </div>
+    <div class="screen-label">Einstellungen</div>
+  </div>
+
+</div>
+
+<script>
+  const totalScreens = 9;
+  function showScreen(i) {
+    document.querySelectorAll('.flow-btn').forEach((b, j) => b.classList.toggle('active', j === i));
+    document.querySelectorAll('.flow-step-circle').forEach((c, j) => c.classList.toggle('active-step', j === i));
+    document.querySelectorAll('.phone').forEach((p, j) => p.classList.toggle('visible', j === i));
+    document.querySelectorAll('.screen-item').forEach((s, j) => s.style.display = j === i ? 'flex' : 'none');
+    const allBtn = document.querySelectorAll('.flow-btn')[totalScreens];
+    if (allBtn) allBtn.classList.remove('active');
+  }
+  function showAll() {
+    document.querySelectorAll('.flow-btn').forEach((b, j) => b.classList.toggle('active', j === totalScreens));
+    document.querySelectorAll('.flow-step-circle').forEach(c => c.classList.remove('active-step'));
+    document.querySelectorAll('.phone').forEach(p => p.classList.add('visible'));
+    document.querySelectorAll('.screen-item').forEach(s => s.style.display = 'flex');
+  }
+  showScreen(0);
+</script>
+</body>
+</html>

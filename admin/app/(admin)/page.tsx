@@ -1,0 +1,144 @@
+import { supabaseAdmin } from '@/lib/supabase'
+import { AlertTriangle, ShieldCheck, Home, TrendingUp, Users, Eye } from 'lucide-react'
+import Badge from '@/components/ui/Badge'
+import Link from 'next/link'
+
+async function getStats() {
+  const [
+    { count: listings },
+    { count: users },
+    { count: pendingKyc },
+    { count: pendingListings },
+    { count: openDisputes },
+    { data: recentClosings },
+  ] = await Promise.all([
+    supabaseAdmin.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+    supabaseAdmin.from('profiles').select('*', { count: 'exact', head: true }),
+    supabaseAdmin.from('profiles').select('*', { count: 'exact', head: true }).eq('kyc_status', 'pending'),
+    supabaseAdmin.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'pending_review'),
+    supabaseAdmin.from('disputes').select('*', { count: 'exact', head: true }).eq('status', 'open'),
+    supabaseAdmin.from('closings').select('commission_amount, closing_type, created_at').eq('status', 'paid').order('created_at', { ascending: false }).limit(5),
+  ])
+
+  const mrr = recentClosings?.reduce((s, c) => s + Number(c.commission_amount), 0) ?? 0
+
+  return { listings, users, pendingKyc, pendingListings, openDisputes, mrr, recentClosings }
+}
+
+const kpis = [
+  { label: 'Aktive Listings', key: 'listings', icon: Home, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+  { label: 'Registrierte User', key: 'users', icon: Users, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+  { label: 'Offene Disputes', key: 'openDisputes', icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-50' },
+  { label: 'KYC ausstehend', key: 'pendingKyc', icon: ShieldCheck, color: 'text-yellow-600', bg: 'bg-yellow-50' },
+]
+
+export default async function DashboardPage() {
+  const stats = await getStats()
+
+  const alerts = [
+    {
+      href: '/disputes',
+      icon: AlertTriangle,
+      label: 'Offene Disputes',
+      sub: 'Warten auf Entscheidung',
+      count: stats.openDisputes ?? 0,
+      urgent: true,
+    },
+    {
+      href: '/kyc',
+      icon: ShieldCheck,
+      label: 'KYC-Prüfungen',
+      sub: 'Warten auf Freigabe',
+      count: stats.pendingKyc ?? 0,
+      urgent: false,
+    },
+    {
+      href: '/listings',
+      icon: Home,
+      label: 'Listing-Reviews',
+      sub: 'Neue Inserate',
+      count: stats.pendingListings ?? 0,
+      urgent: false,
+    },
+  ]
+
+  return (
+    <div>
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <p className="text-gray-500 text-sm mt-1">Wien · Pilot</p>
+      </div>
+
+      {/* KPI Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {kpis.map(({ label, key, icon: Icon, color, bg }) => (
+          <div key={key} className="bg-white rounded-xl border border-gray-100 p-5 shadow-sm">
+            <div className={`inline-flex p-2 rounded-lg ${bg} mb-3`}>
+              <Icon size={18} className={color} />
+            </div>
+            <div className="text-3xl font-black text-gray-900">
+              {(stats as any)[key] ?? 0}
+            </div>
+            <div className="text-xs text-gray-500 mt-1 font-medium">{label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Offene Aufgaben */}
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+          <h2 className="font-bold text-gray-800 mb-4">Offene Aufgaben</h2>
+          <div className="space-y-2">
+            {alerts.map(({ href, icon: Icon, label, sub, count, urgent }) => (
+              <Link
+                key={href}
+                href={href}
+                className={`flex items-center gap-3 p-3 rounded-lg border transition-colors hover:bg-gray-50 ${
+                  urgent && count > 0 ? 'border-red-200 bg-red-50/50' : 'border-gray-100'
+                }`}
+              >
+                <Icon size={18} className={urgent && count > 0 ? 'text-red-500' : 'text-gray-400'} />
+                <div className="flex-1">
+                  <div className="text-sm font-semibold text-gray-800">{label}</div>
+                  <div className="text-xs text-gray-500">{sub}</div>
+                </div>
+                <Badge variant={urgent && count > 0 ? 'red' : count > 0 ? 'yellow' : 'grey'}>
+                  {count}
+                </Badge>
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        {/* Letzte Abschlüsse */}
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+          <h2 className="font-bold text-gray-800 mb-4">Letzte Abschlüsse</h2>
+          {stats.recentClosings && stats.recentClosings.length > 0 ? (
+            <div className="space-y-2">
+              {stats.recentClosings.map((c: any, i: number) => (
+                <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                  <div className="flex items-center gap-2">
+                    <Badge variant={c.closing_type === 'sale' ? 'green' : 'indigo'}>
+                      {c.closing_type === 'sale' ? 'Kauf' : 'Miete'}
+                    </Badge>
+                    <span className="text-xs text-gray-500">
+                      {new Date(c.created_at).toLocaleDateString('de-AT')}
+                    </span>
+                  </div>
+                  <span className="text-sm font-bold text-indigo-600">
+                    € {Number(c.commission_amount).toLocaleString('de-AT')}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-400">
+              <TrendingUp size={32} className="mx-auto mb-2 opacity-30" />
+              <p className="text-sm">Noch keine Abschlüsse</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

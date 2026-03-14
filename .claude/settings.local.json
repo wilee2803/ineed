@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/tmp/pdf-gen/**)",
+      "Bash(node generate.js)"
+    ]
+  }
+}
