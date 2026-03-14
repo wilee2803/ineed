@@ -33,9 +33,9 @@ export default function LoginPage() {
       .eq('id', data.user.id)
       .single()
 
-    if (profile?.role !== 'admin') {
+    if (!profile || !['admin', 'lister'].includes(profile.role)) {
       await supabase.auth.signOut()
-      setError('Kein Admin-Zugang.')
+      setError('Kein Zugang.')
       setLoading(false)
       return
     }
