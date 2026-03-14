@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import LocaleSwitcher from '@/components/ui/LocaleSwitcher'
 
 export default function ListerRegisterPage() {
   const t = useTranslations('register')
@@ -42,6 +43,7 @@ export default function ListerRegisterPage() {
 
   return (
     <div className="min-h-screen bg-[#0e0e1a] flex items-center justify-center px-4">
+      <div className="absolute top-4 right-4"><LocaleSwitcher /></div>
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <div className="text-4xl font-black tracking-tight text-white mb-1">
