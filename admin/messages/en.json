@@ -5,8 +5,11 @@
     "save": "Save",
     "cancel": "Cancel",
     "back": "Back",
+    "all": "All",
+    "logout": "Sign Out",
     "rent": "Rent",
     "sale": "Sale",
+    "no_name": "(no name)",
     "status": {
       "draft": "Draft",
       "pending_review": "Under Review",
@@ -14,7 +17,14 @@
       "paused": "Paused",
       "rejected": "Rejected",
       "sold": "Sold",
-      "rented": "Rented"
+      "rented": "Rented",
+      "paid": "Paid",
+      "pending": "Pending",
+      "disputed": "Disputed",
+      "open": "Open",
+      "closed": "Closed",
+      "under_review": "Under Review",
+      "resolved_lister": "Resolved"
     },
     "kyc": {
       "pending": "Pending",
@@ -26,7 +36,9 @@
       "seeker": "Seeker",
       "lister": "Lister",
       "admin": "Admin"
-    }
+    },
+    "user_active": "Active",
+    "user_blocked": "Blocked"
   },
   "login": {
     "subtitle": "Sign In",
@@ -109,11 +121,28 @@
     },
     "dashboard": {
       "title": "Dashboard",
-      "subtitle": "Platform Overview"
+      "subtitle": "Vienna · Pilot",
+      "kpi_listings": "Active Listings",
+      "kpi_users": "Registered Users",
+      "kpi_disputes": "Open Disputes",
+      "kpi_kyc": "Pending KYC",
+      "open_tasks": "Open Tasks",
+      "disputes_label": "Open Disputes",
+      "disputes_sub": "Awaiting decision",
+      "kyc_label": "KYC Reviews",
+      "kyc_sub": "Awaiting approval",
+      "listings_label": "Listing Reviews",
+      "listings_sub": "New listings",
+      "recent_closings": "Recent Closings",
+      "no_closings": "No closings yet"
     },
     "listings": {
       "title": "Listing Review",
       "subtitle": "Review and approve new listings",
+      "tab_review": "Under Review",
+      "tab_active": "Active",
+      "tab_rejected": "Rejected",
+      "tab_all": "All",
       "approve": "Approve",
       "reject": "Reject",
       "details": "Details",
@@ -122,11 +151,77 @@
     "kyc": {
       "title": "KYC Review",
       "subtitle": "Review identity verifications",
+      "tab_pending": "Pending",
+      "tab_review": "In Review",
+      "tab_verified": "Verified",
+      "tab_rejected": "Rejected",
       "approve": "Approve",
       "reject": "Reject",
       "empty": "No entries",
       "done_approved": "✓ Approved",
-      "done_rejected": "✗ Rejected"
+      "done_rejected": "✗ Rejected",
+      "registered": "Registered",
+      "kyc_submitted": "KYC submitted"
+    },
+    "disputes": {
+      "title": "Dispute Management",
+      "subtitle": "Damage reports and deposit decisions",
+      "tab_open": "Open",
+      "tab_review": "Under Review",
+      "tab_resolved": "Resolved",
+      "tab_closed": "Closed",
+      "tab_all": "All",
+      "empty": "No disputes",
+      "urgent": "Urgent",
+      "hours_open": "h open",
+      "from": "From",
+      "against": "Against",
+      "amount": "Amount"
+    },
+    "users": {
+      "title": "User Management",
+      "subtitle_found": "users found",
+      "tab_all": "All",
+      "empty": "No users",
+      "col_user": "User",
+      "col_role": "Role",
+      "col_kyc": "KYC",
+      "col_status": "Status",
+      "col_registered": "Registered"
+    },
+    "markets": {
+      "title": "Markets & Cities",
+      "subtitle": "Manage multi-city rollout",
+      "add": "+ New Market",
+      "col_city": "City",
+      "col_country": "Country",
+      "col_currency": "Currency",
+      "col_deposit": "Deposit",
+      "col_status": "Status",
+      "col_launch": "Launch",
+      "active": "● Active",
+      "inactive": "○ Inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate"
+    },
+    "revenue": {
+      "title": "Revenue & Commissions",
+      "subtitle": "Rent: 3× monthly rent · Sale: 1% of sale price",
+      "kpi_total": "Total Revenue",
+      "kpi_rent": "Rent Commissions (3×)",
+      "kpi_sale": "Sale Commissions (1%)",
+      "kpi_pending": "Pending",
+      "kpi_pending_unit": "closings",
+      "pending_title": "⏳ Pending Commissions",
+      "all_closings": "All Closings",
+      "no_closings": "No closings yet",
+      "col_object": "Property",
+      "col_type": "Type",
+      "col_price": "Price",
+      "col_commission": "Commission",
+      "col_status": "Status",
+      "col_date": "Date",
+      "open": "pending"
     }
   }
 }

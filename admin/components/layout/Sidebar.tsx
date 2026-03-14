@@ -14,6 +14,7 @@ export default function Sidebar() {
   const locale = useLocale()
   const router = useRouter()
   const t = useTranslations('admin.nav')
+  const tCommon = useTranslations('common')
 
   const nav = [
     { href: `/${locale}`,           label: t('dashboard'), icon: LayoutDashboard },
@@ -65,7 +66,7 @@ export default function Sidebar() {
         <button onClick={handleLogout}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-red-400 hover:bg-red-400/10 transition-colors">
           <LogOut size={16} />
-          Abmelden
+          {tCommon('logout')}
         </button>
       </div>
     </aside>

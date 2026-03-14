@@ -5,8 +5,11 @@
     "save": "Speichern",
     "cancel": "Abbrechen",
     "back": "Zurück",
+    "all": "Alle",
+    "logout": "Abmelden",
     "rent": "Miete",
-    "sale": "Verkauf",
+    "sale": "Kauf",
+    "no_name": "(kein Name)",
     "status": {
       "draft": "Entwurf",
       "pending_review": "In Prüfung",
@@ -14,7 +17,14 @@
       "paused": "Pausiert",
       "rejected": "Abgelehnt",
       "sold": "Verkauft",
-      "rented": "Vermietet"
+      "rented": "Vermietet",
+      "paid": "Bezahlt",
+      "pending": "Ausstehend",
+      "disputed": "Dispute",
+      "open": "Offen",
+      "closed": "Geschlossen",
+      "under_review": "In Prüfung",
+      "resolved_lister": "Entschieden"
     },
     "kyc": {
       "pending": "Ausstehend",
@@ -26,7 +36,9 @@
       "seeker": "Seeker",
       "lister": "Lister",
       "admin": "Admin"
-    }
+    },
+    "user_active": "Aktiv",
+    "user_blocked": "Gesperrt"
   },
   "login": {
     "subtitle": "Anmelden",
@@ -102,18 +114,35 @@
       "listings": "Listings",
       "kyc": "KYC",
       "disputes": "Disputes",
-      "revenue": "Revenue",
-      "users": "Users",
-      "markets": "Markets",
-      "settings": "Settings"
+      "revenue": "Umsatz",
+      "users": "Benutzer",
+      "markets": "Märkte",
+      "settings": "Einstellungen"
     },
     "dashboard": {
       "title": "Dashboard",
-      "subtitle": "Plattform-Übersicht"
+      "subtitle": "Wien · Pilot",
+      "kpi_listings": "Aktive Listings",
+      "kpi_users": "Registrierte User",
+      "kpi_disputes": "Offene Disputes",
+      "kpi_kyc": "KYC ausstehend",
+      "open_tasks": "Offene Aufgaben",
+      "disputes_label": "Offene Disputes",
+      "disputes_sub": "Warten auf Entscheidung",
+      "kyc_label": "KYC-Prüfungen",
+      "kyc_sub": "Warten auf Freigabe",
+      "listings_label": "Listing-Reviews",
+      "listings_sub": "Neue Inserate",
+      "recent_closings": "Letzte Abschlüsse",
+      "no_closings": "Noch keine Abschlüsse"
     },
     "listings": {
       "title": "Listing Review",
       "subtitle": "Neue Inserate prüfen und freigeben",
+      "tab_review": "In Prüfung",
+      "tab_active": "Aktiv",
+      "tab_rejected": "Abgelehnt",
+      "tab_all": "Alle",
       "approve": "Freigeben",
       "reject": "Ablehnen",
       "details": "Details",
@@ -122,11 +151,77 @@
     "kyc": {
       "title": "KYC Review",
       "subtitle": "Identitätsverifikationen prüfen",
+      "tab_pending": "Ausstehend",
+      "tab_review": "In Prüfung",
+      "tab_verified": "Verifiziert",
+      "tab_rejected": "Abgelehnt",
       "approve": "Freigeben",
       "reject": "Ablehnen",
       "empty": "Keine Einträge",
       "done_approved": "✓ Abgeschlossen",
-      "done_rejected": "✗ Abgelehnt"
+      "done_rejected": "✗ Abgelehnt",
+      "registered": "Registriert",
+      "kyc_submitted": "KYC eingereicht"
+    },
+    "disputes": {
+      "title": "Dispute Management",
+      "subtitle": "Schadensmeldungen und Kautions-Entscheidungen",
+      "tab_open": "Offen",
+      "tab_review": "In Prüfung",
+      "tab_resolved": "Entschieden",
+      "tab_closed": "Geschlossen",
+      "tab_all": "Alle",
+      "empty": "Keine Disputes",
+      "urgent": "Dringend",
+      "hours_open": "h offen",
+      "from": "Von",
+      "against": "Gegen",
+      "amount": "Betrag"
+    },
+    "users": {
+      "title": "Benutzerverwaltung",
+      "subtitle_found": "User gefunden",
+      "tab_all": "Alle",
+      "empty": "Keine User",
+      "col_user": "Benutzer",
+      "col_role": "Rolle",
+      "col_kyc": "KYC",
+      "col_status": "Status",
+      "col_registered": "Registriert"
+    },
+    "markets": {
+      "title": "Märkte & Städte",
+      "subtitle": "Multi-City Rollout verwalten",
+      "add": "+ Neuer Markt",
+      "col_city": "Stadt",
+      "col_country": "Land",
+      "col_currency": "Währung",
+      "col_deposit": "Kaution",
+      "col_status": "Status",
+      "col_launch": "Launch",
+      "active": "● Aktiv",
+      "inactive": "○ Inaktiv",
+      "activate": "Aktivieren",
+      "deactivate": "Deaktivieren"
+    },
+    "revenue": {
+      "title": "Umsatz & Provisionen",
+      "subtitle": "Miete: 3× Monatsmiete · Kauf: 1% des Kaufpreises",
+      "kpi_total": "Gesamtumsatz",
+      "kpi_rent": "Miet-Provisionen (3×)",
+      "kpi_sale": "Kauf-Provisionen (1%)",
+      "kpi_pending": "Ausstehend",
+      "kpi_pending_unit": "Abschlüsse",
+      "pending_title": "⏳ Ausstehende Provisionen",
+      "all_closings": "Alle Abschlüsse",
+      "no_closings": "Noch keine Abschlüsse",
+      "col_object": "Objekt",
+      "col_type": "Typ",
+      "col_price": "Preis",
+      "col_commission": "Provision",
+      "col_status": "Status",
+      "col_date": "Datum",
+      "open": "offen"
     }
   }
 }

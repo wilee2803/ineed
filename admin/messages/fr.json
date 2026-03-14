@@ -5,8 +5,11 @@
     "save": "Enregistrer",
     "cancel": "Annuler",
     "back": "Retour",
+    "all": "Tous",
+    "logout": "Se déconnecter",
     "rent": "Location",
     "sale": "Vente",
+    "no_name": "(sans nom)",
     "status": {
       "draft": "Brouillon",
       "pending_review": "En cours d'examen",
@@ -14,7 +17,14 @@
       "paused": "En pause",
       "rejected": "Rejeté",
       "sold": "Vendu",
-      "rented": "Loué"
+      "rented": "Loué",
+      "paid": "Payé",
+      "pending": "En attente",
+      "disputed": "Litige",
+      "open": "Ouvert",
+      "closed": "Fermé",
+      "under_review": "En cours",
+      "resolved_lister": "Résolu"
     },
     "kyc": {
       "pending": "En attente",
@@ -26,7 +36,9 @@
       "seeker": "Chercheur",
       "lister": "Propriétaire",
       "admin": "Admin"
-    }
+    },
+    "user_active": "Actif",
+    "user_blocked": "Bloqué"
   },
   "login": {
     "subtitle": "Connexion",
@@ -109,11 +121,28 @@
     },
     "dashboard": {
       "title": "Tableau de bord",
-      "subtitle": "Vue d'ensemble de la plateforme"
+      "subtitle": "Vienne · Pilote",
+      "kpi_listings": "Annonces actives",
+      "kpi_users": "Utilisateurs inscrits",
+      "kpi_disputes": "Litiges ouverts",
+      "kpi_kyc": "KYC en attente",
+      "open_tasks": "Tâches ouvertes",
+      "disputes_label": "Litiges ouverts",
+      "disputes_sub": "En attente de décision",
+      "kyc_label": "Vérifications KYC",
+      "kyc_sub": "En attente d'approbation",
+      "listings_label": "Examen des annonces",
+      "listings_sub": "Nouvelles annonces",
+      "recent_closings": "Transactions récentes",
+      "no_closings": "Aucune transaction"
     },
     "listings": {
       "title": "Examen des annonces",
       "subtitle": "Examiner et approuver les nouvelles annonces",
+      "tab_review": "En cours",
+      "tab_active": "Actives",
+      "tab_rejected": "Rejetées",
+      "tab_all": "Toutes",
       "approve": "Approuver",
       "reject": "Rejeter",
       "details": "Détails",
@@ -122,11 +151,77 @@
     "kyc": {
       "title": "Examen KYC",
       "subtitle": "Examiner les vérifications d'identité",
+      "tab_pending": "En attente",
+      "tab_review": "En cours",
+      "tab_verified": "Vérifiés",
+      "tab_rejected": "Rejetés",
       "approve": "Approuver",
       "reject": "Rejeter",
       "empty": "Aucune entrée",
       "done_approved": "✓ Approuvé",
-      "done_rejected": "✗ Rejeté"
+      "done_rejected": "✗ Rejeté",
+      "registered": "Inscrit",
+      "kyc_submitted": "KYC soumis"
+    },
+    "disputes": {
+      "title": "Gestion des litiges",
+      "subtitle": "Rapports de dommages et décisions de caution",
+      "tab_open": "Ouverts",
+      "tab_review": "En cours",
+      "tab_resolved": "Résolus",
+      "tab_closed": "Fermés",
+      "tab_all": "Tous",
+      "empty": "Aucun litige",
+      "urgent": "Urgent",
+      "hours_open": "h ouvert",
+      "from": "De",
+      "against": "Contre",
+      "amount": "Montant"
+    },
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "subtitle_found": "utilisateurs trouvés",
+      "tab_all": "Tous",
+      "empty": "Aucun utilisateur",
+      "col_user": "Utilisateur",
+      "col_role": "Rôle",
+      "col_kyc": "KYC",
+      "col_status": "Statut",
+      "col_registered": "Inscrit"
+    },
+    "markets": {
+      "title": "Marchés & Villes",
+      "subtitle": "Gérer le déploiement multi-villes",
+      "add": "+ Nouveau marché",
+      "col_city": "Ville",
+      "col_country": "Pays",
+      "col_currency": "Devise",
+      "col_deposit": "Caution",
+      "col_status": "Statut",
+      "col_launch": "Lancement",
+      "active": "● Actif",
+      "inactive": "○ Inactif",
+      "activate": "Activer",
+      "deactivate": "Désactiver"
+    },
+    "revenue": {
+      "title": "Revenus & Commissions",
+      "subtitle": "Location : 3× loyer mensuel · Vente : 1% du prix",
+      "kpi_total": "Revenus totaux",
+      "kpi_rent": "Commissions location (3×)",
+      "kpi_sale": "Commissions vente (1%)",
+      "kpi_pending": "En attente",
+      "kpi_pending_unit": "transactions",
+      "pending_title": "⏳ Commissions en attente",
+      "all_closings": "Toutes les transactions",
+      "no_closings": "Aucune transaction",
+      "col_object": "Bien",
+      "col_type": "Type",
+      "col_price": "Prix",
+      "col_commission": "Commission",
+      "col_status": "Statut",
+      "col_date": "Date",
+      "open": "en attente"
     }
   }
 }
