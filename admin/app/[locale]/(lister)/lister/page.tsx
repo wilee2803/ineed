@@ -3,6 +3,7 @@ import { createServerClient } from '@supabase/ssr'
 import { getTranslations, getLocale } from 'next-intl/server'
 import Link from 'next/link'
 import LocaleSwitcher from '@/components/ui/LocaleSwitcher'
+import LogoutButton from '@/components/ui/LogoutButton'
 
 const STATUS_COLOR: Record<string, string> = {
   draft:          'bg-gray-100 text-gray-600',
@@ -44,6 +45,7 @@ export default async function ListerDashboard() {
         <div className="flex items-center gap-4">
           <LocaleSwitcher />
           <span className="text-sm text-gray-400">{profile?.full_name}</span>
+          <LogoutButton />
           <Link href={`/${locale}/lister/listings/new`}
             className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
             {t('new_listing')}
