@@ -1,4 +1,4 @@
-import { supabaseAdmin } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase-admin'
 import { AlertTriangle, ShieldCheck, Home, TrendingUp, Users, Eye } from 'lucide-react'
 import Badge from '@/components/ui/Badge'
 import Link from 'next/link'
