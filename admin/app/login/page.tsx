@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react'
+import Link from 'next/link'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -39,7 +40,7 @@ export default function LoginPage() {
       return
     }
 
-    router.push('/')
+    router.push(profile.role === 'admin' ? '/' : '/lister')
   }
 
   return (
@@ -101,8 +102,9 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-600 mt-6">
-          🔒 Zugang nur für autorisierte Administratoren
+        <p className="text-center text-xs text-gray-500 mt-4">
+          Noch kein Konto?{' '}
+          <Link href="/lister/register" className="text-indigo-400 hover:underline">Als Lister registrieren</Link>
         </p>
       </div>
     </div>
