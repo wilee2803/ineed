@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Read(//c/tmp/pdf-gen/**)",
-      "Bash(node generate.js)"
+      "Bash(node generate.js)",
+      "Bash(cd \"C:\\\\Users\\\\offic\\\\OneDrive\\\\Dokumente\\\\Smart Lemon\\\\04 AI-Projects\\\\ineed\\\\admin\" && npm install next-intl 2>&1 | tail -5)"
     ]
   }
 }

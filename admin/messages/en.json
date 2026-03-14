@@ -1,0 +1,132 @@
+{
+  "common": {
+    "brand": "ineed",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "rent": "Rent",
+    "sale": "Sale",
+    "status": {
+      "draft": "Draft",
+      "pending_review": "Under Review",
+      "active": "Active",
+      "paused": "Paused",
+      "rejected": "Rejected",
+      "sold": "Sold",
+      "rented": "Rented"
+    },
+    "kyc": {
+      "pending": "Pending",
+      "in_review": "In Review",
+      "verified": "Verified",
+      "rejected": "Rejected"
+    },
+    "roles": {
+      "seeker": "Seeker",
+      "lister": "Lister",
+      "admin": "Admin"
+    }
+  },
+  "login": {
+    "subtitle": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign In",
+    "submitting": "Signing in…",
+    "error_generic": "Login failed",
+    "error_no_access": "Access denied.",
+    "no_account": "Don't have an account?",
+    "register_as_lister": "Register as Lister"
+  },
+  "register": {
+    "title": "Lister Registration",
+    "heading": "Create Account",
+    "name": "Name",
+    "name_placeholder": "John Doe",
+    "email": "Email",
+    "phone": "Phone (optional)",
+    "phone_placeholder": "+44 123 456 789",
+    "password": "Password",
+    "password_placeholder": "Min. 8 characters",
+    "submit": "Register",
+    "submitting": "Registering…",
+    "error_generic": "Registration failed",
+    "already_registered": "Already registered?",
+    "sign_in": "Sign in"
+  },
+  "lister": {
+    "portal": "Lister Portal",
+    "new_listing": "+ New Listing",
+    "stats_total": "Total Listings",
+    "stats_active": "Active",
+    "stats_review": "Under Review",
+    "my_listings": "My Listings",
+    "empty_title": "No listings yet",
+    "empty_desc": "Create your first listing and reach thousands of seekers.",
+    "empty_cta": "Create Listing",
+    "per_month": "/mo",
+    "form": {
+      "title": "New Listing",
+      "heading": "Create Listing",
+      "type_label": "Listing Type",
+      "type_rent": "🏠 Rent",
+      "type_sale": "🔑 Sale",
+      "listing_title": "Title",
+      "listing_title_placeholder": "e.g. Bright 3-room apartment in the city centre",
+      "price_rent": "Monthly Rent (€)",
+      "price_sale": "Sale Price (€)",
+      "price_placeholder_rent": "1200",
+      "price_placeholder_sale": "350000",
+      "address": "Address",
+      "street_placeholder": "Street and house number",
+      "zip_placeholder": "ZIP",
+      "city_placeholder": "City",
+      "rooms": "Rooms",
+      "size": "Size (m²)",
+      "floor": "Floor",
+      "available_from": "Available from",
+      "description": "Description",
+      "description_placeholder": "Describe the property…",
+      "submit": "Submit for Review",
+      "submitting": "Submitting…",
+      "hint": "Your listing will be published after admin review.",
+      "error_geocode": "Address could not be found. Please check street and ZIP.",
+      "error_market": "Market not found."
+    }
+  },
+  "admin": {
+    "panel": "Admin Panel",
+    "nav": {
+      "dashboard": "Dashboard",
+      "listings": "Listings",
+      "kyc": "KYC",
+      "disputes": "Disputes",
+      "revenue": "Revenue",
+      "users": "Users",
+      "markets": "Markets",
+      "settings": "Settings"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Platform Overview"
+    },
+    "listings": {
+      "title": "Listing Review",
+      "subtitle": "Review and approve new listings",
+      "approve": "Approve",
+      "reject": "Reject",
+      "details": "Details",
+      "empty": "No listings in this status"
+    },
+    "kyc": {
+      "title": "KYC Review",
+      "subtitle": "Review identity verifications",
+      "approve": "Approve",
+      "reject": "Reject",
+      "empty": "No entries",
+      "done_approved": "✓ Approved",
+      "done_rejected": "✗ Rejected"
+    }
+  }
+}

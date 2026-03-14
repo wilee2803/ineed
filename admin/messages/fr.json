@@ -1,0 +1,132 @@
+{
+  "common": {
+    "brand": "ineed",
+    "loading": "Chargement…",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "back": "Retour",
+    "rent": "Location",
+    "sale": "Vente",
+    "status": {
+      "draft": "Brouillon",
+      "pending_review": "En cours d'examen",
+      "active": "Actif",
+      "paused": "En pause",
+      "rejected": "Rejeté",
+      "sold": "Vendu",
+      "rented": "Loué"
+    },
+    "kyc": {
+      "pending": "En attente",
+      "in_review": "En cours",
+      "verified": "Vérifié",
+      "rejected": "Rejeté"
+    },
+    "roles": {
+      "seeker": "Chercheur",
+      "lister": "Propriétaire",
+      "admin": "Admin"
+    }
+  },
+  "login": {
+    "subtitle": "Connexion",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion en cours…",
+    "error_generic": "Échec de la connexion",
+    "error_no_access": "Accès refusé.",
+    "no_account": "Pas encore de compte ?",
+    "register_as_lister": "S'inscrire en tant que propriétaire"
+  },
+  "register": {
+    "title": "Inscription Propriétaire",
+    "heading": "Créer un compte",
+    "name": "Nom",
+    "name_placeholder": "Jean Dupont",
+    "email": "E-mail",
+    "phone": "Téléphone (optionnel)",
+    "phone_placeholder": "+33 1 23 45 67 89",
+    "password": "Mot de passe",
+    "password_placeholder": "Min. 8 caractères",
+    "submit": "S'inscrire",
+    "submitting": "Inscription en cours…",
+    "error_generic": "Échec de l'inscription",
+    "already_registered": "Déjà inscrit ?",
+    "sign_in": "Se connecter"
+  },
+  "lister": {
+    "portal": "Portail Propriétaire",
+    "new_listing": "+ Nouvelle annonce",
+    "stats_total": "Annonces au total",
+    "stats_active": "Actives",
+    "stats_review": "En cours d'examen",
+    "my_listings": "Mes annonces",
+    "empty_title": "Aucune annonce",
+    "empty_desc": "Créez votre première annonce et atteignez des milliers de chercheurs.",
+    "empty_cta": "Créer une annonce",
+    "per_month": "/mois",
+    "form": {
+      "title": "Nouvelle annonce",
+      "heading": "Créer une annonce",
+      "type_label": "Type d'annonce",
+      "type_rent": "🏠 Location",
+      "type_sale": "🔑 Vente",
+      "listing_title": "Titre",
+      "listing_title_placeholder": "ex. Bel appartement 3 pièces en centre-ville",
+      "price_rent": "Loyer mensuel (€)",
+      "price_sale": "Prix de vente (€)",
+      "price_placeholder_rent": "1200",
+      "price_placeholder_sale": "350000",
+      "address": "Adresse",
+      "street_placeholder": "Rue et numéro",
+      "zip_placeholder": "Code postal",
+      "city_placeholder": "Ville",
+      "rooms": "Pièces",
+      "size": "Surface (m²)",
+      "floor": "Étage",
+      "available_from": "Disponible à partir du",
+      "description": "Description",
+      "description_placeholder": "Décrivez le bien…",
+      "submit": "Soumettre pour examen",
+      "submitting": "Envoi en cours…",
+      "hint": "Votre annonce sera publiée après validation par l'administrateur.",
+      "error_geocode": "Adresse introuvable. Veuillez vérifier la rue et le code postal.",
+      "error_market": "Marché introuvable."
+    }
+  },
+  "admin": {
+    "panel": "Panneau Admin",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "listings": "Annonces",
+      "kyc": "KYC",
+      "disputes": "Litiges",
+      "revenue": "Revenus",
+      "users": "Utilisateurs",
+      "markets": "Marchés",
+      "settings": "Paramètres"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "subtitle": "Vue d'ensemble de la plateforme"
+    },
+    "listings": {
+      "title": "Examen des annonces",
+      "subtitle": "Examiner et approuver les nouvelles annonces",
+      "approve": "Approuver",
+      "reject": "Rejeter",
+      "details": "Détails",
+      "empty": "Aucune annonce dans ce statut"
+    },
+    "kyc": {
+      "title": "Examen KYC",
+      "subtitle": "Examiner les vérifications d'identité",
+      "approve": "Approuver",
+      "reject": "Rejeter",
+      "empty": "Aucune entrée",
+      "done_approved": "✓ Approuvé",
+      "done_rejected": "✗ Rejeté"
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "common": {
+    "brand": "ineed",
+    "loading": "Lädt…",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "back": "Zurück",
+    "rent": "Miete",
+    "sale": "Verkauf",
+    "status": {
+      "draft": "Entwurf",
+      "pending_review": "In Prüfung",
+      "active": "Aktiv",
+      "paused": "Pausiert",
+      "rejected": "Abgelehnt",
+      "sold": "Verkauft",
+      "rented": "Vermietet"
+    },
+    "kyc": {
+      "pending": "Ausstehend",
+      "in_review": "In Prüfung",
+      "verified": "Verifiziert",
+      "rejected": "Abgelehnt"
+    },
+    "roles": {
+      "seeker": "Seeker",
+      "lister": "Lister",
+      "admin": "Admin"
+    }
+  },
+  "login": {
+    "subtitle": "Anmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "submit": "Einloggen",
+    "submitting": "Wird angemeldet…",
+    "error_generic": "Login fehlgeschlagen",
+    "error_no_access": "Kein Zugang.",
+    "no_account": "Noch kein Konto?",
+    "register_as_lister": "Als Lister registrieren"
+  },
+  "register": {
+    "title": "Lister Registrierung",
+    "heading": "Konto erstellen",
+    "name": "Name",
+    "name_placeholder": "Max Mustermann",
+    "email": "E-Mail",
+    "phone": "Telefon (optional)",
+    "phone_placeholder": "+43 123 456 789",
+    "password": "Passwort",
+    "password_placeholder": "Min. 8 Zeichen",
+    "submit": "Registrieren",
+    "submitting": "Wird registriert…",
+    "error_generic": "Registrierung fehlgeschlagen",
+    "already_registered": "Bereits registriert?",
+    "sign_in": "Einloggen"
+  },
+  "lister": {
+    "portal": "Lister Portal",
+    "new_listing": "+ Neues Inserat",
+    "stats_total": "Inserate gesamt",
+    "stats_active": "Aktiv",
+    "stats_review": "In Prüfung",
+    "my_listings": "Meine Inserate",
+    "empty_title": "Noch keine Inserate",
+    "empty_desc": "Erstelle dein erstes Inserat und erreiche tausende Suchende.",
+    "empty_cta": "Jetzt inserieren",
+    "per_month": "/Mo",
+    "form": {
+      "title": "Neues Inserat",
+      "heading": "Inserat erstellen",
+      "type_label": "Art des Inserats",
+      "type_rent": "🏠 Miete",
+      "type_sale": "🔑 Verkauf",
+      "listing_title": "Titel",
+      "listing_title_placeholder": "z.B. Helle 3-Zimmer-Wohnung im 7. Bezirk",
+      "price_rent": "Miete pro Monat (€)",
+      "price_sale": "Kaufpreis (€)",
+      "price_placeholder_rent": "1200",
+      "price_placeholder_sale": "350000",
+      "address": "Adresse",
+      "street_placeholder": "Straße und Hausnummer",
+      "zip_placeholder": "PLZ",
+      "city_placeholder": "Stadt",
+      "rooms": "Zimmer",
+      "size": "Fläche (m²)",
+      "floor": "Etage",
+      "available_from": "Verfügbar ab",
+      "description": "Beschreibung",
+      "description_placeholder": "Beschreibe die Wohnung…",
+      "submit": "Inserat zur Prüfung einreichen",
+      "submitting": "Wird eingereicht…",
+      "hint": "Das Inserat wird nach der Admin-Prüfung veröffentlicht.",
+      "error_geocode": "Adresse konnte nicht gefunden werden. Bitte prüfe Straße und PLZ.",
+      "error_market": "Markt nicht gefunden."
+    }
+  },
+  "admin": {
+    "panel": "Admin Panel",
+    "nav": {
+      "dashboard": "Dashboard",
+      "listings": "Listings",
+      "kyc": "KYC",
+      "disputes": "Disputes",
+      "revenue": "Revenue",
+      "users": "Users",
+      "markets": "Markets",
+      "settings": "Settings"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Plattform-Übersicht"
+    },
+    "listings": {
+      "title": "Listing Review",
+      "subtitle": "Neue Inserate prüfen und freigeben",
+      "approve": "Freigeben",
+      "reject": "Ablehnen",
+      "details": "Details",
+      "empty": "Keine Listings in diesem Status"
+    },
+    "kyc": {
+      "title": "KYC Review",
+      "subtitle": "Identitätsverifikationen prüfen",
+      "approve": "Freigeben",
+      "reject": "Ablehnen",
+      "empty": "Keine Einträge",
+      "done_approved": "✓ Abgeschlossen",
+      "done_rejected": "✗ Abgelehnt"
+    }
+  }
+}
