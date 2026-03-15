@@ -36,14 +36,19 @@ export default function LoginPage() {
       .eq('id', data.user.id)
       .single()
 
-    if (!profile || !['admin', 'lister'].includes(profile.role)) {
+    if (!profile || !['admin', 'lister', 'seeker'].includes(profile.role)) {
       await supabase.auth.signOut()
       setError(t('error_no_access'))
       setLoading(false)
       return
     }
 
-    router.push(profile.role === 'admin' ? `/${locale}` : `/${locale}/lister`)
+    const redirectMap: Record<string, string> = {
+      admin: `/${locale}`,
+      lister: `/${locale}/lister`,
+      seeker: `/${locale}/seeker`,
+    }
+    router.push(redirectMap[profile.role] ?? `/${locale}`)
   }
 
   return (
@@ -94,12 +99,19 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-500 mt-4">
-          {t('no_account')}{' '}
-          <Link href={`/${locale}/lister/register`} className="text-indigo-400 hover:underline">
-            {t('register_as_lister')}
-          </Link>
-        </p>
+        <div className="text-center text-xs text-gray-500 mt-4 space-y-2">
+          <p>
+            {t('no_account')}{' '}
+            <Link href={`/${locale}/seeker/register`} className="text-violet-400 hover:underline">
+              {t('register_as_seeker')}
+            </Link>
+          </p>
+          <p>
+            <Link href={`/${locale}/lister/register`} className="text-indigo-400 hover:underline">
+              {t('register_as_lister')}
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )

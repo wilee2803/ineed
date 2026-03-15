@@ -49,7 +49,8 @@
     "error_generic": "Login fehlgeschlagen",
     "error_no_access": "Kein Zugang.",
     "no_account": "Noch kein Konto?",
-    "register_as_lister": "Als Lister registrieren"
+    "register_as_lister": "Als Lister registrieren",
+    "register_as_seeker": "Als Seeker registrieren"
   },
   "register": {
     "title": "Lister Registrierung",
@@ -105,6 +106,74 @@
       "hint": "Das Inserat wird nach der Admin-Prüfung veröffentlicht.",
       "error_geocode": "Adresse konnte nicht gefunden werden. Bitte prüfe Straße und PLZ.",
       "error_market": "Markt nicht gefunden."
+    }
+  },
+  "seeker": {
+    "portal": "Seeker Portal",
+    "dashboard": "Mein Bereich",
+    "search_btn": "Wohnungen suchen",
+    "stats_bookings": "Besichtigungen",
+    "stats_upcoming": "Bevorstehend",
+    "stats_completed": "Abgeschlossen",
+    "my_bookings": "Meine Besichtigungen",
+    "no_bookings_title": "Noch keine Besichtigungen",
+    "no_bookings_desc": "Finde deine Traumwohnung und buche eine Besichtigung.",
+    "no_bookings_cta": "Jetzt suchen",
+    "booking_status": {
+      "pending": "Ausstehend",
+      "confirmed": "Bestätigt",
+      "active": "Aktiv",
+      "completed": "Abgeschlossen",
+      "cancelled": "Storniert",
+      "disputed": "Dispute",
+      "expired": "Abgelaufen"
+    },
+    "search": {
+      "title": "Wohnungen & Häuser",
+      "subtitle": "Aktive Inserate in Wien",
+      "filter_type": "Art",
+      "filter_all": "Alle",
+      "filter_rent": "Miete",
+      "filter_sale": "Kauf",
+      "filter_rooms": "Zimmer (min.)",
+      "filter_price_max": "Max. Preis (€)",
+      "filter_city": "Stadt",
+      "results": "Ergebnisse",
+      "empty": "Keine Inserate gefunden",
+      "per_month": "/Mo",
+      "details": "Details"
+    },
+    "detail": {
+      "back": "Zurück zur Suche",
+      "type_rent": "Miete",
+      "type_sale": "Kauf",
+      "rooms": "Zimmer",
+      "size": "Fläche",
+      "floor": "Etage",
+      "available": "Verfügbar ab",
+      "description": "Beschreibung",
+      "slots_title": "Besichtigungstermine",
+      "no_slots": "Keine Termine verfügbar",
+      "book_btn": "Besichtigung buchen",
+      "book_hint": "Buchung & Kaution via Stripe (demnächst verfügbar)"
+    },
+    "register": {
+      "title": "Seeker Registrierung",
+      "heading": "Als Wohnungssuchender registrieren",
+      "name": "Name",
+      "name_placeholder": "Max Mustermann",
+      "email": "E-Mail",
+      "phone": "Telefon (optional)",
+      "phone_placeholder": "+43 123 456 789",
+      "password": "Passwort",
+      "password_placeholder": "Min. 8 Zeichen",
+      "submit": "Registrieren",
+      "submitting": "Wird registriert…",
+      "error_generic": "Registrierung fehlgeschlagen",
+      "already_registered": "Bereits registriert?",
+      "sign_in": "Einloggen",
+      "is_lister": "Bist du Vermieter/Verkäufer?",
+      "register_as_lister": "Als Lister registrieren"
     }
   },
   "admin": {

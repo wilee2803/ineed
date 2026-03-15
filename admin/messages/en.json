@@ -49,7 +49,8 @@
     "error_generic": "Login failed",
     "error_no_access": "Access denied.",
     "no_account": "Don't have an account?",
-    "register_as_lister": "Register as Lister"
+    "register_as_lister": "Register as Lister",
+    "register_as_seeker": "Register as Seeker"
   },
   "register": {
     "title": "Lister Registration",
@@ -105,6 +106,74 @@
       "hint": "Your listing will be published after admin review.",
       "error_geocode": "Address could not be found. Please check street and ZIP.",
       "error_market": "Market not found."
+    }
+  },
+  "seeker": {
+    "portal": "Seeker Portal",
+    "dashboard": "My Area",
+    "search_btn": "Search Properties",
+    "stats_bookings": "Viewings",
+    "stats_upcoming": "Upcoming",
+    "stats_completed": "Completed",
+    "my_bookings": "My Viewings",
+    "no_bookings_title": "No viewings yet",
+    "no_bookings_desc": "Find your dream home and book a viewing.",
+    "no_bookings_cta": "Search now",
+    "booking_status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "active": "Active",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "disputed": "Disputed",
+      "expired": "Expired"
+    },
+    "search": {
+      "title": "Apartments & Houses",
+      "subtitle": "Active listings in Vienna",
+      "filter_type": "Type",
+      "filter_all": "All",
+      "filter_rent": "Rent",
+      "filter_sale": "Sale",
+      "filter_rooms": "Rooms (min.)",
+      "filter_price_max": "Max. Price (€)",
+      "filter_city": "City",
+      "results": "Results",
+      "empty": "No listings found",
+      "per_month": "/mo",
+      "details": "Details"
+    },
+    "detail": {
+      "back": "Back to search",
+      "type_rent": "Rent",
+      "type_sale": "Sale",
+      "rooms": "Rooms",
+      "size": "Size",
+      "floor": "Floor",
+      "available": "Available from",
+      "description": "Description",
+      "slots_title": "Viewing Slots",
+      "no_slots": "No slots available",
+      "book_btn": "Book Viewing",
+      "book_hint": "Booking & deposit via Stripe (coming soon)"
+    },
+    "register": {
+      "title": "Seeker Registration",
+      "heading": "Register as Property Seeker",
+      "name": "Name",
+      "name_placeholder": "John Doe",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "phone_placeholder": "+44 123 456 789",
+      "password": "Password",
+      "password_placeholder": "Min. 8 characters",
+      "submit": "Register",
+      "submitting": "Registering…",
+      "error_generic": "Registration failed",
+      "already_registered": "Already registered?",
+      "sign_in": "Sign in",
+      "is_lister": "Are you a landlord/seller?",
+      "register_as_lister": "Register as Lister"
     }
   },
   "admin": {

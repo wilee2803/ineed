@@ -49,7 +49,8 @@
     "error_generic": "Échec de la connexion",
     "error_no_access": "Accès refusé.",
     "no_account": "Pas encore de compte ?",
-    "register_as_lister": "S'inscrire en tant que propriétaire"
+    "register_as_lister": "S'inscrire en tant que propriétaire",
+    "register_as_seeker": "S'inscrire en tant que chercheur"
   },
   "register": {
     "title": "Inscription Propriétaire",
@@ -105,6 +106,74 @@
       "hint": "Votre annonce sera publiée après validation par l'administrateur.",
       "error_geocode": "Adresse introuvable. Veuillez vérifier la rue et le code postal.",
       "error_market": "Marché introuvable."
+    }
+  },
+  "seeker": {
+    "portal": "Portail Chercheur",
+    "dashboard": "Mon espace",
+    "search_btn": "Rechercher des biens",
+    "stats_bookings": "Visites",
+    "stats_upcoming": "À venir",
+    "stats_completed": "Terminées",
+    "my_bookings": "Mes visites",
+    "no_bookings_title": "Aucune visite",
+    "no_bookings_desc": "Trouvez votre logement idéal et réservez une visite.",
+    "no_bookings_cta": "Rechercher maintenant",
+    "booking_status": {
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "active": "Active",
+      "completed": "Terminée",
+      "cancelled": "Annulée",
+      "disputed": "Litige",
+      "expired": "Expirée"
+    },
+    "search": {
+      "title": "Appartements & Maisons",
+      "subtitle": "Annonces actives à Vienne",
+      "filter_type": "Type",
+      "filter_all": "Tous",
+      "filter_rent": "Location",
+      "filter_sale": "Vente",
+      "filter_rooms": "Pièces (min.)",
+      "filter_price_max": "Prix max. (€)",
+      "filter_city": "Ville",
+      "results": "Résultats",
+      "empty": "Aucune annonce trouvée",
+      "per_month": "/mois",
+      "details": "Détails"
+    },
+    "detail": {
+      "back": "Retour à la recherche",
+      "type_rent": "Location",
+      "type_sale": "Vente",
+      "rooms": "Pièces",
+      "size": "Surface",
+      "floor": "Étage",
+      "available": "Disponible à partir du",
+      "description": "Description",
+      "slots_title": "Créneaux de visite",
+      "no_slots": "Aucun créneau disponible",
+      "book_btn": "Réserver une visite",
+      "book_hint": "Réservation et caution via Stripe (bientôt disponible)"
+    },
+    "register": {
+      "title": "Inscription Chercheur",
+      "heading": "S'inscrire en tant que chercheur",
+      "name": "Nom",
+      "name_placeholder": "Jean Dupont",
+      "email": "E-mail",
+      "phone": "Téléphone (optionnel)",
+      "phone_placeholder": "+33 1 23 45 67 89",
+      "password": "Mot de passe",
+      "password_placeholder": "Min. 8 caractères",
+      "submit": "S'inscrire",
+      "submitting": "Inscription en cours…",
+      "error_generic": "Échec de l'inscription",
+      "already_registered": "Déjà inscrit ?",
+      "sign_in": "Se connecter",
+      "is_lister": "Vous êtes propriétaire/vendeur ?",
+      "register_as_lister": "S'inscrire en tant que propriétaire"
     }
   },
   "admin": {
