@@ -14,14 +14,14 @@ export default async function LandingPage() {
         <div className="text-2xl font-black tracking-tight">
           i<span className="text-violet-400">need</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <LocaleSwitcher />
           <Link href={`/${locale}/login`}
-            className="text-sm text-gray-400 hover:text-white transition-colors font-medium">
+            className="hidden sm:inline text-sm text-gray-400 hover:text-white transition-colors font-medium">
             Einloggen
           </Link>
           <Link href={`/${locale}/seeker/register`}
-            className="bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors">
+            className="hidden sm:flex items-center bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors">
             Kostenlos starten
           </Link>
         </div>

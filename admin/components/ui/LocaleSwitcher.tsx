@@ -33,7 +33,7 @@ export default function LocaleSwitcher() {
           }`}
         >
           <span>{l.flag}</span>
-          <span>{l.label}</span>
+          <span className="hidden sm:inline">{l.label}</span>
         </button>
       ))}
     </div>
