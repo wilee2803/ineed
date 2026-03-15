@@ -4,6 +4,7 @@ import { getTranslations, getLocale } from 'next-intl/server'
 import Link from 'next/link'
 import LocaleSwitcher from '@/components/ui/LocaleSwitcher'
 import LogoutButton from '@/components/ui/LogoutButton'
+import { Search } from 'lucide-react'
 
 const BOOKING_COLOR: Record<string, string> = {
   pending:   'bg-yellow-100 text-yellow-700',
@@ -54,14 +55,19 @@ export default async function SeekerDashboard() {
           <LocaleSwitcher />
           <span className="text-sm text-gray-400 hidden md:block">{profile?.full_name}</span>
           <LogoutButton />
-          <Link href={`/${locale}/seeker/search`}
-            className="bg-violet-600 hover:bg-violet-700 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
-            {t('search_btn')}
-          </Link>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-8 py-10">
+      {/* Search CTA */}
+      <div className="border-b border-white/[0.06] px-4 py-4 flex justify-center">
+        <Link href={`/${locale}/seeker/search`}
+          className="flex items-center gap-2 bg-violet-600 hover:bg-violet-700 active:bg-violet-800 text-white font-bold px-6 py-3 rounded-xl transition-colors text-base shadow-lg shadow-violet-900/30">
+          <Search size={18} />
+          {t('search_btn')}
+        </Link>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8">
         <div className="grid grid-cols-3 gap-4 mb-10">
           {[
             { label: t('stats_bookings'), value: bookings?.length ?? 0 },
