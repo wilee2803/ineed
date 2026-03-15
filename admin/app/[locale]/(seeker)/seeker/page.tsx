@@ -45,17 +45,17 @@ export default async function SeekerDashboard() {
 
   return (
     <div className="min-h-screen bg-[#0e0e1a]">
-      <header className="border-b border-white/[0.06] px-8 py-5 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <header className="border-b border-white/[0.06] px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="text-2xl font-black tracking-tight text-white">i<span className="text-violet-400">need</span></div>
-          <span className="text-xs text-gray-500 font-medium">{t('portal')}</span>
+          <span className="text-xs text-gray-500 font-medium hidden sm:block">{t('portal')}</span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           <LocaleSwitcher />
-          <span className="text-sm text-gray-400">{profile?.full_name}</span>
+          <span className="text-sm text-gray-400 hidden md:block">{profile?.full_name}</span>
           <LogoutButton />
           <Link href={`/${locale}/seeker/search`}
-            className="bg-violet-600 hover:bg-violet-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            className="bg-violet-600 hover:bg-violet-700 text-white text-xs sm:text-sm font-semibold px-3 sm:px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
             {t('search_btn')}
           </Link>
         </div>
