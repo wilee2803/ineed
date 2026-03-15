@@ -17,7 +17,7 @@ export default function Sidebar() {
   const tCommon = useTranslations('common')
 
   const nav = [
-    { href: `/${locale}`,           label: t('dashboard'), icon: LayoutDashboard },
+    { href: `/${locale}/dashboard`,  label: t('dashboard'), icon: LayoutDashboard },
     { href: `/${locale}/listings`,  label: t('listings'),  icon: Home },
     { href: `/${locale}/kyc`,       label: t('kyc'),       icon: ShieldCheck },
     { href: `/${locale}/disputes`,  label: t('disputes'),  icon: AlertTriangle },
@@ -45,7 +45,7 @@ export default function Sidebar() {
 
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
         {nav.map(({ href, label, icon: Icon }) => {
-          const active = path === href || (href !== `/${locale}` && path.startsWith(href))
+          const active = path === href || (href !== `/${locale}/dashboard` && path.startsWith(href))
           return (
             <Link key={href} href={href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${

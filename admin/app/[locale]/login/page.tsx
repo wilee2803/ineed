@@ -44,7 +44,7 @@ export default function LoginPage() {
     }
 
     const redirectMap: Record<string, string> = {
-      admin: `/${locale}`,
+      admin: `/${locale}/dashboard`,
       lister: `/${locale}/lister`,
       seeker: `/${locale}/seeker`,
     }
