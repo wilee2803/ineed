@@ -107,10 +107,8 @@ export default function SeekerSearchPage() {
       {/* Header */}
       <header className="border-b border-white/[0.06] px-4 sm:px-6 py-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
-          <div className="text-2xl font-black tracking-tight text-white">i<span className="text-violet-400">need</span></div>
-          <Link href={`/${locale}/seeker`}
-            className="flex items-center gap-1.5 text-xs font-semibold text-gray-400 hover:text-white transition-colors bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.08] px-3 py-1.5 rounded-lg">
-            ← Mein Bereich
+          <Link href={`/${locale}/seeker`}>
+            <div className="text-2xl font-black tracking-tight text-white">i<span className="text-violet-400">need</span></div>
           </Link>
         </div>
         <div className="flex items-center gap-3">
