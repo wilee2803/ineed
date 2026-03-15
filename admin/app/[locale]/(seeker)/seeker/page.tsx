@@ -5,6 +5,8 @@ import Link from 'next/link'
 import LocaleSwitcher from '@/components/ui/LocaleSwitcher'
 import LogoutButton from '@/components/ui/LogoutButton'
 import { Search } from 'lucide-react'
+import { Suspense } from 'react'
+import BookingSuccessBanner from '@/components/seeker/BookingSuccessBanner'
 
 const BOOKING_COLOR: Record<string, string> = {
   pending:   'bg-yellow-100 text-yellow-700',
@@ -68,6 +70,7 @@ export default async function SeekerDashboard() {
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-8 py-8">
+        <Suspense><BookingSuccessBanner /></Suspense>
         <div className="grid grid-cols-3 gap-4 mb-10">
           {[
             { label: t('stats_bookings'), value: bookings?.length ?? 0 },

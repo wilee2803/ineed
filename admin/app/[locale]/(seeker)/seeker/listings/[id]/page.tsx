@@ -201,18 +201,16 @@ export default async function SeekerListingDetailPage({
                       {Math.round((new Date(slot.end_time).getTime() - new Date(slot.start_time).getTime()) / 60000)} min
                     </div>
                   </div>
-                  <button
-                    disabled
-                    title={t('book_hint')}
-                    className="bg-violet-600/30 text-violet-400 text-xs font-semibold px-4 py-2 rounded-lg cursor-not-allowed opacity-60">
+                  <Link
+                    href={`/${locale}/seeker/listings/${id}/book/${slot.id}`}
+                    className="bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors">
                     {t('book_btn')}
-                  </button>
+                  </Link>
                 </div>
               ))}
             </div>
           )}
 
-          <p className="text-xs text-gray-600 mt-3 text-center">{t('book_hint')}</p>
         </div>
       </div>
     </div>
