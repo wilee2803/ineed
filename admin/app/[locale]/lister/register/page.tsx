@@ -35,7 +35,7 @@ export default function ListerRegisterPage() {
     await supabase.from('profiles').update({ role: 'lister', phone: form.phone || null })
       .eq('id', data.user.id)
 
-    router.push(`/${locale}/lister`)
+    window.location.href = `/${locale}/lister`
   }
 
   const inputClass = "w-full bg-white/[0.06] border border-white/[0.1] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"

@@ -36,7 +36,7 @@ export default function SeekerRegisterPage() {
       await supabase.from('profiles').update({ phone: form.phone }).eq('id', data.user.id)
     }
 
-    router.push(`/${locale}/seeker`)
+    window.location.href = `/${locale}/seeker`
   }
 
   const inputClass = "w-full bg-white/[0.06] border border-white/[0.1] rounded-xl px-4 py-3 text-sm text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-violet-500"
