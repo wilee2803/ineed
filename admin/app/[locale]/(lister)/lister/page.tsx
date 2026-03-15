@@ -83,21 +83,27 @@ export default async function ListerDashboard() {
           <div className="space-y-3">
             {listings.map(l => (
               <div key={l.id} className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-5 flex items-center justify-between">
-                <div>
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
-                    <span className="text-white font-semibold">{l.title}</span>
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${STATUS_COLOR[l.status] ?? 'bg-gray-100 text-gray-600'}`}>
+                    <span className="text-white font-semibold truncate">{l.title}</span>
+                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 ${STATUS_COLOR[l.status] ?? 'bg-gray-100 text-gray-600'}`}>
                       {tStatus(l.status as any)}
                     </span>
                   </div>
                   <div className="text-sm text-gray-400">{l.address_city} · {l.rooms} Zi. · {l.size_sqm} m²</div>
                 </div>
-                <div className="text-right">
-                  <div className="text-white font-bold">
-                    {Number(l.price).toLocaleString(locale)} €
-                    {l.listing_type === 'rent' && <span className="text-gray-500 font-normal text-sm">{t('per_month')}</span>}
+                <div className="flex items-center gap-4 ml-4 shrink-0">
+                  <div className="text-right">
+                    <div className="text-white font-bold">
+                      {Number(l.price).toLocaleString(locale)} €
+                      {l.listing_type === 'rent' && <span className="text-gray-500 font-normal text-sm">{t('per_month')}</span>}
+                    </div>
+                    <div className="text-xs text-gray-600 mt-1">{new Date(l.created_at).toLocaleDateString(locale)}</div>
                   </div>
-                  <div className="text-xs text-gray-600 mt-1">{new Date(l.created_at).toLocaleDateString(locale)}</div>
+                  <Link href={`/${locale}/lister/listings/${l.id}`}
+                    className="text-xs font-semibold text-indigo-400 hover:text-indigo-300 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">
+                    Verwalten →
+                  </Link>
                 </div>
               </div>
             ))}

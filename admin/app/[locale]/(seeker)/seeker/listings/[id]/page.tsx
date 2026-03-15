@@ -33,6 +33,12 @@ export default async function SeekerListingDetailPage({
 
   if (!listing) notFound()
 
+  const { data: images } = await supabase
+    .from('listing_images')
+    .select('id, url, is_cover, sort_order')
+    .eq('listing_id', id)
+    .order('sort_order', { ascending: true })
+
   const { data: slots } = await supabase
     .from('viewing_slots')
     .select('id, slot_type, start_time, end_time, is_booked')
@@ -67,6 +73,25 @@ export default async function SeekerListingDetailPage({
           className="text-sm text-gray-500 hover:text-gray-300 transition-colors mb-6 inline-block">
           ← {t('back')}
         </Link>
+
+        {/* Photo Gallery */}
+        {images && images.length > 0 && (
+          <div className="mb-6 rounded-2xl overflow-hidden">
+            {images.length === 1 ? (
+              <img src={images[0].url} alt={listing.title}
+                className="w-full aspect-video object-cover" />
+            ) : (
+              <div className="grid grid-cols-2 gap-1.5">
+                <img src={images[0].url} alt={listing.title}
+                  className="w-full aspect-video object-cover rounded-xl col-span-2" />
+                {images.slice(1, 3).map(img => (
+                  <img key={img.id} src={img.url} alt=""
+                    className="w-full aspect-video object-cover rounded-xl" />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Header */}
         <div className="mb-6">
@@ -122,7 +147,7 @@ export default async function SeekerListingDetailPage({
           <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Besichtigungsoptionen</h2>
           <div className="grid grid-cols-4 gap-3">
             {[
-              { icon: Camera,  label: 'Fotos',     hint: 'Bilder demnächst',    active: false },
+              { icon: Camera,  label: 'Fotos',     hint: 'Fotos ansehen',       active: (images?.length ?? 0) > 0 },
               { icon: Globe,   label: '360° Tour',  hint: 'Virtuell erkunden',   active: false },
               { icon: Video,   label: 'Live-Cam',   hint: 'Live-Stream',         active: listing.has_live_camera },
               { icon: Key,     label: 'Self-Tour',  hint: 'Smart Lock Zugang',   active: !!listing.smart_lock_id },
@@ -139,7 +164,9 @@ export default async function SeekerListingDetailPage({
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-600 mt-2 text-center">Fotos &amp; 360° Tour folgen in Kürze</p>
+          {(images?.length ?? 0) === 0 && (
+            <p className="text-xs text-gray-600 mt-2 text-center">Fotos werden vom Vermieter noch hochgeladen</p>
+          )}
         </div>
 
         {/* Description */}
