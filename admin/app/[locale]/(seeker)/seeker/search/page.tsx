@@ -49,9 +49,27 @@ export default function SeekerSearchPage() {
     setListings(results)
   }, [filterType, filterRooms, filterMaxPrice])
 
-  // Fetch on mount with default center
+  // Auto-Geolocation on mount
   useEffect(() => {
-    fetchListings(center[0], center[1], radiusKm)
+    if (!navigator.geolocation) {
+      fetchListings(center[0], center[1], radiusKm)
+      return
+    }
+    setLocating(true)
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const newCenter: [number, number] = [pos.coords.longitude, pos.coords.latitude]
+        setCenter(newCenter)
+        setLocating(false)
+        fetchListings(newCenter[0], newCenter[1], radiusKm)
+      },
+      () => {
+        // Fallback: Wien
+        setLocating(false)
+        fetchListings(center[0], center[1], radiusKm)
+      },
+      { timeout: 8000 }
+    )
   }, [])
 
   function locateMe() {

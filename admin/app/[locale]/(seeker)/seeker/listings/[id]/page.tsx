@@ -3,6 +3,7 @@ import { createServerClient } from '@supabase/ssr'
 import { getTranslations, getLocale } from 'next-intl/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { Camera, Globe, Video, Key } from 'lucide-react'
 import LogoutButton from '@/components/ui/LogoutButton'
 import LocaleSwitcher from '@/components/ui/LocaleSwitcher'
 
@@ -114,6 +115,31 @@ export default async function SeekerListingDetailPage({
               <div className="text-xs text-gray-500 mt-1">{t('available')}</div>
             </div>
           )}
+        </div>
+
+        {/* Besichtigungsoptionen */}
+        <div className="mb-8">
+          <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">Besichtigungsoptionen</h2>
+          <div className="grid grid-cols-4 gap-3">
+            {[
+              { icon: Camera,  label: 'Fotos',     hint: 'Bilder demnächst',    active: false },
+              { icon: Globe,   label: '360° Tour',  hint: 'Virtuell erkunden',   active: false },
+              { icon: Video,   label: 'Live-Cam',   hint: 'Live-Stream',         active: listing.has_live_camera },
+              { icon: Key,     label: 'Self-Tour',  hint: 'Smart Lock Zugang',   active: !!listing.smart_lock_id },
+            ].map(({ icon: Icon, label, hint, active }) => (
+              <div key={label}
+                title={hint}
+                className={`flex flex-col items-center justify-center gap-2 rounded-xl p-4 border transition-colors cursor-default select-none ${
+                  active
+                    ? 'bg-violet-600/15 border-violet-500/40 text-violet-300'
+                    : 'bg-white/[0.03] border-white/[0.06] text-gray-600'
+                }`}>
+                <Icon size={22} strokeWidth={1.6} />
+                <span className="text-xs font-semibold text-center leading-tight">{label}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-600 mt-2 text-center">Fotos &amp; 360° Tour folgen in Kürze</p>
         </div>
 
         {/* Description */}
