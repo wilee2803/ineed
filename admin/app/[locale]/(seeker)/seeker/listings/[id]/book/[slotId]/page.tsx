@@ -5,6 +5,15 @@ import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import BookingForm from '@/components/seeker/BookingForm'
 import LogoutButton from '@/components/ui/LogoutButton'
+import { stripe } from '@/lib/stripe'
+
+const DEPOSIT_AMOUNT_CENTS = 10000 // 100.00 EUR
+
+const SLOT_TYPE_LABEL: Record<string, string> = {
+  physical:     '👤 Persönliche Besichtigung',
+  live_camera:  '📷 Live-Kamera Besichtigung',
+  self_service: '🔑 Self-Service Besichtigung',
+}
 
 export default async function BookingPage({
   params,
@@ -24,7 +33,6 @@ export default async function BookingPage({
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect(`/${locale}/login`)
 
-  // Check if slot is still available
   const { data: slot } = await supabase
     .from('viewing_slots')
     .select('id, slot_type, start_time, end_time, is_booked, listing_id')
@@ -43,34 +51,48 @@ export default async function BookingPage({
 
   if (!listing) notFound()
 
-  // Create Payment Intent server-side
-  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/stripe/create-payment-intent`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', cookie: cookieStore.toString() },
-    body: JSON.stringify({ slotId, listingId }),
+  // Create Payment Intent directly (no internal fetch)
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: DEPOSIT_AMOUNT_CENTS,
+    currency: 'eur',
+    capture_method: 'manual',
+    metadata: {
+      slot_id: slotId,
+      listing_id: listingId,
+      seeker_id: user.id,
+      listing_title: listing.title,
+    },
+    description: `Kaution: ${listing.title}`,
   })
 
-  if (!res.ok) {
-    const err = await res.json()
+  // Create booking record
+  const { data: booking, error: bookingError } = await supabase
+    .from('bookings')
+    .insert({
+      slot_id: slotId,
+      seeker_id: user.id,
+      listing_id: listingId,
+      status: 'pending',
+      stripe_payment_intent_id: paymentIntent.id,
+      deposit_amount: DEPOSIT_AMOUNT_CENTS / 100,
+      deposit_currency: 'EUR',
+    })
+    .select()
+    .single()
+
+  if (bookingError || !booking) {
+    await stripe.paymentIntents.cancel(paymentIntent.id)
     return (
       <div className="min-h-screen bg-[#0e0e1a] flex items-center justify-center px-4">
         <div className="text-center max-w-sm">
           <div className="text-4xl mb-4">⚠️</div>
           <h1 className="text-white font-bold text-lg mb-2">Buchung nicht möglich</h1>
-          <p className="text-gray-400 text-sm mb-6">{err.error ?? 'Unbekannter Fehler'}</p>
+          <p className="text-gray-400 text-sm mb-6">{bookingError?.message ?? 'Unbekannter Fehler'}</p>
           <Link href={`/${locale}/seeker/listings/${listingId}`}
             className="text-violet-400 hover:underline text-sm">← Zurück zum Inserat</Link>
         </div>
       </div>
     )
-  }
-
-  const { clientSecret, bookingId, depositAmount } = await res.json()
-
-  const SLOT_TYPE_LABEL: Record<string, string> = {
-    physical:    '👤 Persönliche Besichtigung',
-    live_camera: '📷 Live-Kamera Besichtigung',
-    self_service:'🔑 Self-Service Besichtigung',
   }
 
   const slotLabel = `${SLOT_TYPE_LABEL[slot.slot_type] ?? slot.slot_type} · ${
@@ -100,9 +122,9 @@ export default async function BookingPage({
         <h1 className="text-2xl font-black text-white mb-8">Besichtigung buchen</h1>
 
         <BookingForm
-          clientSecret={clientSecret}
-          bookingId={bookingId}
-          depositAmount={depositAmount}
+          clientSecret={paymentIntent.client_secret!}
+          bookingId={booking.id}
+          depositAmount={DEPOSIT_AMOUNT_CENTS / 100}
           slotLabel={slotLabel}
           listingTitle={listing.title}
           listingAddress={`${listing.address_street}, ${listing.address_zip} ${listing.address_city}`}
